@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('airlock')->namespace('API')->group(function() {
+Route::prefix('airlock')->namespace('Auth')->group(function() {
     Route::post('register', 'AuthController@register');
     Route::post('token', 'AuthController@token');
+    Route::post('login', 'LoginController@login');
 });
 
 Route::middleware('auth:airlock')->get('/name', function (Request $request) {
