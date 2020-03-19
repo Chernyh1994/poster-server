@@ -7,9 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Airlock\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *

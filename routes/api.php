@@ -16,14 +16,6 @@ use Illuminate\Validation\ValidationException;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('airlock')->namespace('Auth')->group(function() {
-    Route::post('register', 'AuthController@register');
-    Route::post('token', 'AuthController@token');
-});
-
-// Route::middleware('auth:airlock')->get('/name', function (Request $request) {
-//     return response()->json(['name' => $request->user()->name]);
-// });
 
 Route::middleware('auth:airlock')->get('/user', function (Request $request) {
     return $request->user();
@@ -59,5 +51,4 @@ Route::post('/airlock/token', function (Request $request) {
 
     return response($response, 201);
 });
-
 
