@@ -38,7 +38,6 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
-            'device_name' => ['required', 'string']
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +51,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'The provided credentials are incorrect.'], 401);
         }
 
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken($request->email)->plainTextToken;
         return response()->json(['token' => $token], 200);
     }
 
