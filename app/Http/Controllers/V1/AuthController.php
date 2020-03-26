@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Validator;
 use App\User;
+// use Laravel\Sanctum\NewAccessTokenplainTextTokenNewAccessToken;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,6 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'device_name' => ['required', 'string']
         ]);
 
         if ($validator->fails()) {
@@ -28,7 +28,7 @@ class AuthController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json(['token' => $token], 200);
     }
@@ -48,7 +48,9 @@ class AuthController extends Controller
         $password = Hash::check($request->password, $user->password);
 
         if (!$user || !$password) {
-            return response()->json(['error' => 'The provided credentials are incorrect.'], 401);
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
         }
 
         $token = $user->createToken($request->email)->plainTextToken;
