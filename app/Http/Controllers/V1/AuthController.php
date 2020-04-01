@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Validator;
-use App\User;
-// use Laravel\Sanctum\NewAccessTokenplainTextTokenNewAccessToken;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -33,7 +32,7 @@ class AuthController extends Controller
         return response()->json(['token' => $token, 'name' => $user->name], 200);
     }
 
-    protected function token(Request $request)
+    protected function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'max:255'],
@@ -55,18 +54,6 @@ class AuthController extends Controller
 
         $token = $user->createToken($request->email)->plainTextToken;
         return response()->json(['token' => $token, 'name' => $user->name], 200);
-    }
-
-    protected function logout(Request $request)
-    {
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return response()->json(['error' => 'lougout error'], 401);
-        }
-
-        $user->tokens()->delete();
-        return response('Loggedout', 200);
     }
 
     protected function name(Request $request)
