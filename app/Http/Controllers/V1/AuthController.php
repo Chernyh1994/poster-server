@@ -30,6 +30,8 @@ class AuthController extends Controller
             $token = $user->createToken($request->userAgent())->plainTextToken;
             return response()->json(compact('user', 'token'));
         }
+        
+        return response()->json(['error' => 'Unauthenticated.'], 401);
     }
 
     public function login(LoginRequest $request)
@@ -42,6 +44,8 @@ class AuthController extends Controller
             $token = $user->createToken($request->userAgent())->plainTextToken;
             return response()->json(compact('user', 'token'));
         }
+
+        return response()->json(['error' => 'Unauthenticated.'], 401);
     }
 
 }
