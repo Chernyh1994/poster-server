@@ -4,48 +4,50 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\V1\Auth\RegisterRequest;
+use App\Http\Requests\V1\Auth\LoginRequest;
 use App\Models\User;
 
 class AuthController extends Controller
 {
     /**
-     * Handle an authentication once.
+     * Handle an registration.
      *
-     * @param  Request  $request
+     * @param  RegisterRequest $request
      *
-     * @return Response
+     * @return ResponseJson
      */
-
     public function register(RegisterRequest $request)
     {
-        $credentials = $request->only('name', 'email', 'password');
+        $credentials = $request->validated();
+        $credentials['password'] = bcrypt($credentials['password']);
+        
+        $user = User::create($credentials);
+        $token = $user->createToken($request->userAgent())->plainTextToken;
+        
+        return response()->json(compact('user', 'token'));    
+    }
+
+    /**
+     * Handle an authentication user.
+     *
+     * @param LoginRequest $request
+     *
+     * @return ResponseJson
+     */
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->validated();
 
         if (!Auth::once($credentials))
         {
-            $credentials['password'] = bcrypt($credentials['password']);
-            $user = User::create($credentials);
-            $token = $user->createToken($request->userAgent())->plainTextToken;
-            return response()->json(compact('user', 'token'));
-        }
-        
-        return response()->json(['error' => 'Unauthenticated.'], 401);
-    }
-
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::once($credentials))
-        {
-            $user = Auth::user();
-            $token = $user->createToken($request->userAgent())->plainTextToken;
-            return response()->json(compact('user', 'token'));
+            return response()->json(['message' => 'The selected password is invalid.'], 422);
         }
 
-        return response()->json(['error' => 'Unauthenticated.'], 401);
+        $user = Auth::user();
+        $token = $user->createToken($request->userAgent())->plainTextToken;
+
+        return response()->json(compact('user', 'token'));
     }
 
 }
