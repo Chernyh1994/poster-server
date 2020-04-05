@@ -4,17 +4,20 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Http\Requests\V1\Post\CreatePostRequest;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return ResponseJson
      */
     public function index()
     {
-        //
+        $items = Post::all();
+        return response()->json(compact('items'));
     }
 
     /**
@@ -30,12 +33,15 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  CreatePostRequest  $request
+     * @return ResponseJson
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        //
+        $credentials = $request->validated();
+        $post = Post::create($credentials);
+
+        return response()->json(compact('post'));
     }
 
     /**
