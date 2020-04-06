@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "da6f5542-2a3a-4d96-a3bb-9ef79d336d33",
+		"name": "Laravel-Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"TestAuth\",\n    \"email\": \"email@testqweerr.eee\",\n    \"password\": \"password\",\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"chernuh.1994@gmail.com\",\n\t\"password\":\"1234wer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/V1/login ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"login "
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "yUpBTa1DfvI6krx0zzwfucmRrAzXypjIKgfCKVwvMKCDDbrJBdAaY2ouN30Dop2gYgVuE7dldxHtcedJ",
+				"type": "string"
+			}
+		]
+	},
+	"protocolProfileBehavior": {}
+}

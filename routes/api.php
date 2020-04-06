@@ -3,26 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-Route::prefix('airlock')->namespace('Auth')->group(function() {
+Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
     Route::post('register', 'AuthController@register');
-    Route::post('token', 'AuthController@token');
-    Route::post('login', 'LoginController@login');
+    Route::post('login', 'AuthController@login');
+    Route::middleware('auth:sanctum')->get('user', 'AuthController@name');
 });
 
-Route::middleware('auth:airlock')->get('/name', function (Request $request) {
-    return response()->json(['name' => $request->user()->name]);
+Route::middleware('api')->prefix('post')->namespace('V1')->group(function() {
+    Route::get('posts', 'PostController@index');
+    Route::post('create', 'PostController@store');
 });
-
-
-
-
