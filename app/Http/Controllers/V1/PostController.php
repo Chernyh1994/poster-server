@@ -16,7 +16,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $items = Post::all();
+        $items = Post::with('user')->get();
+//         foreach ($items as $item) {
+//             dd( $item->user->name);
+//         }
         return response()->json(compact('items'));
     }
 

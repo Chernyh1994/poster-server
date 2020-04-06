@@ -21,6 +21,11 @@ class Post extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at'
+        'updated_at', 'author_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 }
