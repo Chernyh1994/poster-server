@@ -4,21 +4,24 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Post;
-use App\Http\Requests\V1\Post\CreatePostRequest;
+use App\Http\Requests\V1\Comment\CreateCommentRequest;
+use App\Http\Requests\V1\Comment\GetCommentsRequest;
+use App\Models\CommentPost;
 
-class PostController extends Controller
+class CommentPostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  GetCommentsRequest  $request
      * @return ResponseJson
      */
-    public function index()
+    public function index(GetCommentsRequest $request)
     {
-        $items = Post::with('user')->get();
+        $credentials = $request->validated();
+        $comment = CommentPost::where('post_id', $credentials['post_id'])->with('user')->get();
 
-        return response()->json(compact('items'));
+        return response()->json(compact('comment'));
     }
 
     /**
@@ -32,17 +35,17 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created comment in storage.
      *
-     * @param  CreatePostRequest  $request
+     * @param  CreateCommentRequest  $request
      * @return ResponseJson
      */
-    public function store(CreatePostRequest $request)
+    public function store(CreateCommentRequest $request)
     {
         $credentials = $request->validated();
-        $post = Post::create($credentials);
+        $comment = CommentPost::create($credentials);
 
-        return response()->json(compact('post'));
+        return response()->json(compact('comment'));
     }
 
     /**
