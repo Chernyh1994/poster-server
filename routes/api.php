@@ -12,9 +12,10 @@ Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
 Route::middleware('api')->prefix('post')->namespace('V1')->group(function() {
     Route::get('posts', 'PostController@index');
     Route::post('create', 'PostController@store');
+    Route::get('get/{id}', 'PostController@getPost');
 });
 
 Route::middleware('api')->prefix('comment')->namespace('V1')->group(function() {
-    Route::get('comments', 'CommentPostController@index');
+    Route::get('/{id}', 'CommentPostController@index');
     Route::post('create', 'CommentPostController@store');
 });

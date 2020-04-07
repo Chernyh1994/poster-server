@@ -24,7 +24,7 @@ class GetCommentsRequest extends FormRequest
     public function rules()
     {
         return [
-            'post_id' => 'required|integer|exists:posts,id'
+            'post_id' => 'required|integer|exists:comment_posts,id'
         ];
     }
 }

@@ -16,11 +16,9 @@ class CommentPostController extends Controller
      * @param  GetCommentsRequest  $request
      * @return ResponseJson
      */
-    public function index(GetCommentsRequest $request)
+    public function index(Request $request, $id)
     {
-        $credentials = $request->validated();
-        $comment = CommentPost::where('post_id', $credentials['post_id'])->with('user')->get();
-
+        $comment = CommentPost::where('post_id', $id)->with('user')->get();
         return response()->json(compact('comment'));
     }
 

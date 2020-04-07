@@ -48,12 +48,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request, $id
+     * @return ResponseJson
      */
-    public function show($id)
+    public function getPost(Request $request, $id)
     {
-        //
+        $post = Post::where('id', $id)->with('user')->get();
+
+        return response()->json(compact('post'));
     }
 
     /**
@@ -64,7 +66,6 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
