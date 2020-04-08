@@ -10,7 +10,7 @@ Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
 });
 
 Route::middleware('api')->prefix('post')->namespace('V1')->group(function() {
-    Route::get('posts', 'PostController@index');
+    Route::get('posts/{offset}', 'PostController@index');
     Route::post('create', 'PostController@store');
     Route::get('get/{id}', 'PostController@getPost');
 });

@@ -14,11 +14,15 @@ class PostController extends Controller
      *
      * @return ResponseJson
      */
-    public function index()
+    public function index(Request $request, $offset)
     {
-        $items = Post::with('user')->get();
-
-        return response()->json(compact('items'));
+        $items = Post::offset($offset)->take(5)->with('user')->get();
+        $hasMore = false;
+        if(count($items))
+        {
+            $hasMore = true;
+        }
+        return response()->json(compact('items', 'hasMore'));
     }
 
     /**
