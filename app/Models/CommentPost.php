@@ -12,7 +12,7 @@ class CommentPost extends Model
      * @var array
      */
     protected $fillable = [
-        'description', 'author_id', 'post_id'
+        'description', 'author_id', 'post_id', 'parent_id'
     ];
 
     /**

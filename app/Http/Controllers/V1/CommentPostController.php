@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\V1\Comment\CreateCommentRequest;
 use App\Http\Requests\V1\Comment\GetCommentsRequest;
+use App\Http\Requests\V1\Comment\CreateSubCommentRequest;
 use App\Models\CommentPost;
 
 class CommentPostController extends Controller
@@ -28,22 +29,25 @@ class CommentPostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created comment in storage.
      *
      * @param  CreateCommentRequest  $request
      * @return ResponseJson
      */
-    public function store(CreateCommentRequest $request)
+    public function createComment(CreateCommentRequest $request)
+    {
+        $credentials = $request->validated();
+        $comment = CommentPost::create($credentials);
+
+        return response()->json(compact('comment'));
+    }
+    /**
+     * Store a newly created comment in storage.
+     *
+     * @param  CreateSubCommentRequest  $request
+     * @return ResponseJson
+     */
+    public function createSubComment(CreateSubCommentRequest $request)
     {
         $credentials = $request->validated();
         $comment = CommentPost::create($credentials);
@@ -52,15 +56,17 @@ class CommentPostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a listing of the resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return ResponseJson
      */
-    public function show($id)
+    public function getSubComment(Request $request, $id)
     {
-        //
+        $comment = CommentPost::where('parent_id', $id)->with('user')->get();
+        return response()->json(compact('subComment'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

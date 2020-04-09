@@ -17,13 +17,15 @@ class CreateCommentPostsTable extends Migration
             $table->increments('id');
 
             $table->integer('author_id')->unsigned();
-            $table->integer('post_id')->unsigned();
+            $table->integer('post_id')->unsigned()->nullable();
+            $table->integer('parent_id')->unsigned()->nullable();
 
             $table->text('description');
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('comment_posts')->onDelete('cascade');
         });
     }
 
