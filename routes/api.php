@@ -16,6 +16,6 @@ Route::middleware('api')->prefix('post')->namespace('V1')->group(function() {
 });
 
 Route::middleware('api')->prefix('comment')->namespace('V1')->group(function() {
-    Route::get('/{id}', 'CommentPostController@index');
+    Route::get('/{id}/{offset}', 'CommentPostController@index');
     Route::post('create', 'CommentPostController@store');
 });

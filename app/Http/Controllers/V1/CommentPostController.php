@@ -16,10 +16,15 @@ class CommentPostController extends Controller
      * @param  GetCommentsRequest  $request
      * @return ResponseJson
      */
-    public function index(Request $request, $id)
+    public function index(Request $request, $id, $offset)
     {
-        $comment = CommentPost::where('post_id', $id)->with('user')->get();
-        return response()->json(compact('comment'));
+        $comment = CommentPost::offset($offset)->take(1)->where('post_id', $id)->with('user')->get();
+        $hasMore = false;
+        if(count($comment))
+        {
+            $hasMore = true;
+        }
+        return response()->json(compact('comment', 'hasMore'));
     }
 
     /**

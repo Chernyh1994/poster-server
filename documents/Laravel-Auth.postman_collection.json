@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "da6f5542-2a3a-4d96-a3bb-9ef79d336d33",
-		"name": "Laravel-Auth",
+		"name": "Laravel-Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -9,10 +9,16 @@
 			"name": "register",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"TestAuth\",\n    \"email\": \"email@testqweerr.eee\",\n    \"password\": \"password\",\n}",
+					"raw": "{\n\t\"name\": \"test\",\n \t\"email\":\"test@gmail.com\",\n\t\"password\":\"1234qwer\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,7 +26,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/register",
+					"raw": "http://localhost:8000/api/V1/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -28,6 +34,7 @@
 					"port": "8000",
 					"path": [
 						"api",
+						"V1",
 						"register"
 					]
 				}
@@ -47,7 +54,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\":\"chernuh.1994@gmail.com\",\n\t\"password\":\"1234wer\"\n}",
+					"raw": "{\n\t\"email\":\"test@gmail.com\",\n\t\"password\":\"1234qwer\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,7 +62,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/V1/login ",
+					"raw": "http://localhost:8000/api/V1/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -64,7 +71,210 @@
 					"path": [
 						"api",
 						"V1",
-						"login "
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user with token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "DvoVz7htrxHSQA8wrQ8l2n4xpYpGuI3Z8ZLQbk29H6aDpR05VMP6SLXZ2fKlIH8W16rZaqDIbFSXlU3u",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/V1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\":\"test test\",\n\t\"description\":\"dsdsdcdscscdszs\",\n\t\"author_id\":\"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/post/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"post",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/post/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"post",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"description\":\"testetesteteset\",\n\t\"author_id\":\"1\",\n\t\"post_id\": \"6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/comment/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"comment",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get comment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/comment/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"comment",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get post",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/post/get/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"post",
+						"get",
+						"1"
 					]
 				}
 			},
@@ -81,5 +291,27 @@
 			}
 		]
 	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cd0af9e5-fbc2-45dc-a6bc-a05feb5aeb95",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2a2714ff-9312-4aa7-88fc-e43963e51073",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"protocolProfileBehavior": {}
 }
