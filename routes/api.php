@@ -18,8 +18,9 @@ Route::middleware('api')->prefix('post')->namespace('V1')->group(function() {
 Route::middleware('api')->prefix('comment')->namespace('V1')->group(function() {
     Route::get('/{id}/{offset}', 'CommentPostController@index');
     Route::post('create', 'CommentPostController@createComment');
+});
 
-    Route::get('sub/{id}', 'CommentPostController@getSubComment');
-    Route::post('sub/create', 'CommentPostController@createSubComment');
-
+Route::middleware('api')->prefix('subcomment')->namespace('V1')->group(function() {
+    Route::get('/{parenId}', 'SubCommentController@getSubComment');
+    Route::post('create', 'SubCommentController@createSubComment');
 });
