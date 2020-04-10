@@ -22,10 +22,8 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
         $credentials['password'] = bcrypt($credentials['password']);
-
         $user = User::create($credentials);
         $token = $user->createToken($request->userAgent())->plainTextToken;
-
         return response()->json(compact('user', 'token'));
     }
 
@@ -39,15 +37,12 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-
         if (!Auth::once($credentials))
         {
             return response()->json(['message' => 'The selected password is invalid.'], 422);
         }
-
         $user = Auth::user();
         $token = $user->createToken($request->userAgent())->plainTextToken;
-
         return response()->json(compact('user', 'token'));
     }
    /**
@@ -57,13 +52,9 @@ class AuthController extends Controller
      *
      * @return ResponseJson
      */
-
    public function name(Request $request)
    {
         $user = Auth::user();
-
         return response()->json(compact('user'));
    }
-
-
 }

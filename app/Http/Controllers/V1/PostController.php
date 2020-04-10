@@ -4,6 +4,8 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use App\Models\Post;
 use App\Http\Requests\V1\Post\CreatePostRequest;
 
@@ -12,64 +14,37 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return ResponseJson
-     */
-    public function index(Request $request, $offset)
-    {
-        $items = Post::offset($offset)->take(5)->with('user')->get();
-        $hasMore = false;
-        if(count($items))
-        {
-            $hasMore = true;
-        }
-        return response()->json(compact('items', 'hasMore'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        //
+//         $items = Post::offset($offset)->take(5)->with('user')->get();
+//         return response()->json(compact('items', 'hasMore'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CreatePostRequest  $request
+     * @param  CreatePostRequest $request
      * @return ResponseJson
      */
     public function store(CreatePostRequest $request)
     {
-        $credentials = $request->validated();
-        $post = Post::create($credentials);
-
+        $data = Arr::add($request->validated(), 'author_id', Auth::id());
+        $post = Post::create($data);
         return response()->json(compact('post'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Request  $request, $id
+     * @param  int  $id
      * @return ResponseJson
      */
-    public function getPost(Request $request, $id)
+    public function show($id)
     {
-        $post = Post::where('id', $id)->with('user')->get();
-
+        $post = Post::with(['author', 'comments'])->findOrFail($id);
         return response()->json(compact('post'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
     }
 
     /**
@@ -88,10 +63,17 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return ResponseJson
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $author = Auth::id();
+        if($post->author_id === $author)
+        {
+            $post->delete();
+            return response()->json(['message' => 'post delete']);
+        }
+        return response()->json(['message' => 'error delete'], 422);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1\Post;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreatePostRequest extends FormRequest
@@ -13,7 +14,10 @@ class CreatePostRequest extends FormRequest
     */
     public function authorize()
     {
-        return true;
+        if (Auth::check()) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -26,7 +30,6 @@ class CreatePostRequest extends FormRequest
         return [
             'title' => 'required|string|min:5|max:100',
             'description' => 'required|string|min:5|max:2000|',
-            'author_id' => 'required|integer|exists:users,id'
         ];
     }
 }

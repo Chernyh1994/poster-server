@@ -24,14 +24,14 @@ class Post extends Model
         'updated_at', 'author_id'
     ];
 
-    public function user()
+    public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function commentPost()
+    public function comments()
     {
-        return $this->hasMany(CommentPost::class);
+        return $this->hasMany(Comment::class);
     }
 
 }
