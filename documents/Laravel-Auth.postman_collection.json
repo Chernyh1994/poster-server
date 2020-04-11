@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "register",
+			"name": "auth/register",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -42,7 +42,7 @@
 			"response": []
 		},
 		{
-			"name": "login",
+			"name": "auth/login",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -78,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "get user with token",
+			"name": "auth/user",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -115,8 +115,18 @@
 			"response": []
 		},
 		{
-			"name": "create post",
+			"name": "post",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -127,7 +137,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\":\"test test\",\n\t\"description\":\"dsdsdcdscscdszs\",\n\t\"author_id\":\"1\"\n}",
+					"raw": "{\n\t\"title\":\"test test\",\n\t\"description\":\"dsdsdcdscscdszs\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -135,7 +145,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/post/create",
+					"raw": "http://localhost:8000/api/V1/post",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -143,38 +153,27 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"post",
-						"create"
+						"V1",
+						"post"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "all posts",
+			"name": "post",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8000/api/post/posts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"post",
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "create comment",
-			"request": {
-				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
@@ -182,17 +181,8 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"description\":\"testetesteteset\",\n\t\"author_id\":\"1\",\n\t\"post_id\": \"6\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8000/api/comment/create",
+					"raw": "http://localhost:8000/api/V1/post",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -200,21 +190,37 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"comment",
-						"create"
+						"V1",
+						"post"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "get comment",
+			"name": "post/id",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "",
@@ -225,7 +231,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/comment/2",
+					"raw": "http://localhost:8000/api/V1/post/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -233,7 +239,46 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"comment",
+						"V1",
+						"post",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/V1/post/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"post",
 						"2"
 					]
 				}
@@ -241,12 +286,19 @@
 			"response": []
 		},
 		{
-			"name": "get post",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "comment",
 			"request": {
-				"method": "GET",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
@@ -254,6 +306,49 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"description\":\"testetesteteset\",\n\t\"post_id\": \"3\",\n\t\"parent_id\": \"2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/V1/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "",
@@ -264,7 +359,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/post/get/1",
+					"raw": "http://localhost:8000/api/V1/comment",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -272,9 +367,84 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"post",
-						"get",
+						"V1",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/V1/comment/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"comment",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/V1/comment/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"comment",
+						"2"
 					]
 				}
 			},
