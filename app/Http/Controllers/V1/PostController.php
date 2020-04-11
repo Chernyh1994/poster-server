@@ -14,12 +14,12 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return ResponseJson
      */
     public function index()
     {
-//         $items = Post::offset($offset)->take(5)->with('user')->get();
-//         return response()->json(compact('items', 'hasMore'));
+        $posts = Post::with('author')->paginate(10);
+        return response()->json(compact('posts'));
     }
 
     /**

@@ -12,7 +12,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'description', 'post_id', 'parent_id'
+        'description', 'post_id', 'parent_id', 'author_id'
     ];
 
     /**
@@ -33,4 +33,10 @@ class Comment extends Model
     {
         return $this->belongsTo(Post::class, 'post_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
+    }
+
 }
