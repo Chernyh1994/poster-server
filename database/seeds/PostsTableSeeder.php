@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 class PostsTableSeeder extends Seeder
 {
@@ -10,14 +11,14 @@ class PostsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         $posts = [];
-        for($i = 1; $i <= 10; $i++ ) {
-            $authorId = ($i > 5) ? 1 : 2;
+        for($i = 1; $i <= 50; $i++ ) {
+            $authorId = ($i > 10) ? 1 : 2;
             $posts[] = [
                 'title' => Str::random(10),
-                'description' => Str::random(100),
+                'description' => $faker->realText(),
                 'author_id' => $authorId,
             ];
         }
