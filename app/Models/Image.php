@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Image extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'description', 'post_id', 'parent_id', 'author_id'
+        'images_path', 'post_id', 'comment_id'
     ];
 
     /**
@@ -21,13 +21,8 @@ class Comment extends Model
      * @var array
      */
     protected $hidden = [
-        'updated_at', 'post_id'
+        'updated_at'
     ];
-
-    public function author()
-    {
-        return $this->belongsTo(User::class, 'author_id');
-    }
 
     public function post()
     {
@@ -36,12 +31,5 @@ class Comment extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'parent_id');
-    }
-
-    public function images()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-}
+        return $this->belongsTo(Comment::class, 'comment_id');
+    }}

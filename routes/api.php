@@ -10,5 +10,6 @@ Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
     Route::middleware('auth:sanctum')->group(function() {
         Route::apiResource('post', 'PostController');
         Route::apiResource('comment', 'CommentController');
+        Route::apiResource('images', 'ImageController');
     });
 });
