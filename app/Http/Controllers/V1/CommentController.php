@@ -16,9 +16,9 @@ class CommentController extends Controller
      *
      * @return ResponseJson
      */
-    public function index()
+    public function index($id)
     {
-        $comments = Comment::with('author')->paginate(10);
+        $comments = Comment::where('post_id', '=', $id)->with('author')->paginate(10);
         return response()->json(compact('comments'));
     }
 
@@ -28,9 +28,10 @@ class CommentController extends Controller
      * @param  CreateCommentRequest  $request
      * @return ResponseJson
      */
-    public function store(CreateCommentRequest $request)
+    public function store(CreateCommentRequest $request, $id)
     {
         $data = Arr::add($request->validated(), 'author_id', Auth::id());
+        $data = Arr::add($data, 'post_id', $id);
         $comment = Comment::create($data);
         return response()->json(compact('comment'));
     }
@@ -41,9 +42,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return ResponseJson
      */
-    public function show($id)
+    public function show($postId, $id)
     {
-        $comment = Comment::with(['author', 'comments'])->findOrFail($id);
+        $comment = Comment::where('post_id', '=', $postId)->with(['author', 'comments'])->findOrFail($id);
         return response()->json(compact('comment'));
     }
 
@@ -65,15 +66,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return ResponseJson
      */
-    public function destroy($id)
+    public function destroy($postId, $id)
     {
-        $comment = Comment::find($id);
-        $author = Auth::id();
-        if($comment->author_id === $author)
-        {
-            $comment->delete();
-            return response()->json(['message' => 'comment delete']);
-        }
-        return response()->json(['message' => 'comment delete'], 422);
+        $comment = Comment::has('author_id', Auth::id())->findOrFail($id);
+        $comment->delete();
+        return response()->json(['message' => 'comment delete']);
     }
 }

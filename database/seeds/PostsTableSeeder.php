@@ -17,7 +17,6 @@ class PostsTableSeeder extends Seeder
         for($i = 1; $i <= 50; $i++ ) {
             $authorId = ($i > 10) ? 1 : 2;
             $posts[] = [
-                'title' => Str::random(10),
                 'description' => $faker->realText(),
                 'author_id' => $authorId,
             ];

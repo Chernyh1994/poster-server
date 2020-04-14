@@ -21,7 +21,7 @@ class Comment extends Model
      * @var array
      */
     protected $hidden = [
-        'updated_at', 'post_id'
+        'updated_at'
     ];
 
     public function author()
@@ -39,9 +39,9 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id');
     }
 
-    public function images()
+    public function downloads()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Downloads::class);
     }
 
 }

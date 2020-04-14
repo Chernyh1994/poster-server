@@ -11,9 +11,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'title', 'description', 'author_id'
-    ];
+     protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -34,9 +32,9 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function images()
+    public function downloads()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Download::class);
     }
 
 

@@ -14,10 +14,7 @@ class CreateCommentRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Auth::check()) {
-            return true;
-        }
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -29,8 +26,7 @@ class CreateCommentRequest extends FormRequest
     {
         return [
             'description' => 'required|string|min:1|max:1000|',
-            'post_id' => 'required|integer|exists:posts,id',
-            'parent_id' => 'nullable'
+            'parent_id' => 'nullable|integer|exists:comments,id'
         ];
     }
 }
