@@ -5,9 +5,10 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
 use App\Models\Post;
-use App\Models\Download;
+use App\Models\Image;
 use App\Http\Requests\V1\Post\CreatePostRequest;
 
 class PostController extends Controller
@@ -19,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author', 'downloads'])->paginate(10);
+        $posts = Post::with(['author', 'images'])->paginate(10);
         return response()->json(compact('posts'));
     }
 
@@ -35,7 +36,7 @@ class PostController extends Controller
         $post = Post::create($data);
         if($request->file('images')){
             $path = $request->file('images')->store('upload', 'public');
-            $download = Download::create([
+            $post->images()->create([
                 'path' => $path,
                 'post_id' => $post->id
             ]);
@@ -51,7 +52,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author', 'comments'])->findOrFail($id);
+        $post = Post::with(['author', 'comments', 'images'])->findOrFail($id);
         return response()->json(compact('post'));
     }
 
@@ -75,7 +76,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::has('author_id', Auth::id())->findOrFail($id);
+        $post = Post::findOrFail($id);
         $post->delete();
         return response()->json(['message' => 'post delete']);
     }
