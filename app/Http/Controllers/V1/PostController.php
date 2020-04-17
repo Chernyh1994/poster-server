@@ -25,6 +25,17 @@ class PostController extends Controller
     }
 
     /**
+     * Display a listing from user of the resource.
+     *
+     * @return ResponseJson
+     */
+    public function showPostsUser()
+    {
+        $user_posts = Post::where('author_id', Auth::id())->with(['author', 'images'])->get();
+        return response()->json(compact('user_posts'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  CreatePostRequest $request
