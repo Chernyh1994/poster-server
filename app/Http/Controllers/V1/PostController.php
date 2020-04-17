@@ -31,7 +31,7 @@ class PostController extends Controller
      */
     public function showPostsUser()
     {
-        $user_posts = Post::where('author_id', Auth::id())->with(['author', 'images'])->get();
+        $user_posts = Post::where('author_id', Auth::id())->with(['author', 'images'])->paginate(10);
         return response()->json(compact('user_posts'));
     }
 
