@@ -78,7 +78,6 @@ class AuthController extends Controller
             $data = Arr::add($data, 'avatar_path', $path);
         }
         $user->fill($data)->save();
-        $user = Auth::user();
-        return response()->json(compact('user'));
+        return response()->json(compact('user', 'token'));
     }
 }
