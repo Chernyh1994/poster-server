@@ -12,13 +12,13 @@ use App\Models\Comment;
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a lists comment for post.
      *
      * @return ResponseJson
      */
     public function index($id)
     {
-        $comments = Comment::where('post_id', '=', $id)->with('author')->paginate(10);
+        $comments = Comment::where('post_id', $id)->with('author')->paginate(10);
         return response()->json(compact('comments'));
     }
 
@@ -37,21 +37,21 @@ class CommentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a lists comment list for comment.
      *
-     * @param  int  $id
+     * @param  int $post_id, $id
      * @return ResponseJson
      */
-    public function show($postId, $id)
+    public function show($post_id, $id)
     {
-        $comment = Comment::where('post_id', '=', $postId)->with(['author', 'comments'])->findOrFail($id);
+        $comment = Comment::where('post_id', $post_id)->with(['author', 'comments'])->findOrFail($id);
         return response()->json(compact('comment'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
      * @return ResponseJson
      */
@@ -63,13 +63,16 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $post_id, $id
      * @return ResponseJson
      */
-    public function destroy($postId, $id)
+    public function destroy($post_id, $id)
     {
-        $comment = Comment::has('author_id', Auth::id())->findOrFail($id);
-        $comment->delete();
-        return response()->json(['message' => 'comment delete']);
+        $comment = Comment::findOrFail($id);
+        if($comment->author_id === Auth::id()){
+            $comment->delete();
+            return response()->json(['message' => 'comment delete']);
+        }
+        return response()->json(['message' => ' comment not delete'], 403);
     }
 }

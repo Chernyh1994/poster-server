@@ -70,8 +70,7 @@ class AuthController extends Controller
     */
     public function update(UpdateUserRequest $request)
     {
-        $user_id = Auth::id();
-        $user = User::findOrFail($user_id);
+        $user = User::findOrFail(Auth::id());
         $data = $request->validated();
         if($request->file('avatar')){
             $path = $request->file('avatar')->store('upload/avatars', 'public');

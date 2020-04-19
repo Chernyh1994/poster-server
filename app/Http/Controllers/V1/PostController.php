@@ -14,7 +14,7 @@ use App\Http\Requests\V1\Post\CreatePostRequest;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing post.
      *
      * @return ResponseJson
      */
@@ -25,7 +25,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing from user of the resource.
+     * Display a lists post for user.
      *
      * @return ResponseJson
      */
@@ -70,9 +70,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -88,7 +88,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        $post->delete();
-        return response()->json(['message' => 'post delete']);
+        if($post->author_id === Auth::id()){
+            $post->delete();
+            return response()->json(['message' => 'post delete']);
+        }
+        return response()->json(['message' => ' post not delete'], 403);
     }
 }

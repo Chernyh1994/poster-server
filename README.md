@@ -22,6 +22,10 @@ Copy the example env file and make the required configuration changes in the .en
 Run the database migrations (**Set the database connection in .env before migrating**)
 
     php artisan migrate
+    
+To seed your database, you may use the db:seed command:
+    
+    php artisan db:seed
 
 Start the local development server
 

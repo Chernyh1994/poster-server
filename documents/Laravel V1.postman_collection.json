@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "da6f5542-2a3a-4d96-a3bb-9ef79d336d33",
-		"name": "Laravel-Test",
+		"name": "Laravel V1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -85,7 +85,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "DvoVz7htrxHSQA8wrQ8l2n4xpYpGuI3Z8ZLQbk29H6aDpR05VMP6SLXZ2fKlIH8W16rZaqDIbFSXlU3u",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
 							"type": "string"
 						}
 					]
@@ -122,7 +122,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
 							"type": "string"
 						}
 					]
@@ -168,7 +168,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
 							"type": "string"
 						}
 					]
@@ -208,7 +208,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
 							"type": "string"
 						}
 					]
@@ -230,44 +230,6 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8000/api/V1/post/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"V1",
-						"post",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "post/id",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
 				"url": {
 					"raw": "http://localhost:8000/api/V1/post/2",
 					"protocol": "http",
@@ -286,6 +248,44 @@
 			"response": []
 		},
 		{
+			"name": "post/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/V1/post/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"post",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "comment",
 			"request": {
 				"auth": {
@@ -293,7 +293,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Ffy9GaZEB2nojt7AVKlmD9z6k7DYWAxkBl7M1HnecdnUTP8Ozd1ohRUbsURU3tzT3nws0aoGoQSioU2w",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
 							"type": "string"
 						}
 					]
@@ -308,7 +308,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"description\":\"testetesteteset\",\n\t\"post_id\": \"3\",\n\t\"parent_id\": \"2\"\n}",
+					"raw": "{\n\t\"description\":\"images\",\n\t\"post_id\": \"3\",\n\t\"comment_id\": \"2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -316,7 +316,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/V1/comment",
+					"raw": "http://localhost:8000/api/V1/post/1/comment ",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -325,7 +325,9 @@
 					"path": [
 						"api",
 						"V1",
-						"comment"
+						"post",
+						"1",
+						"comment "
 					]
 				}
 			},
@@ -342,13 +344,19 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
 							"type": "string"
 						}
 					]
 				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "",
@@ -359,7 +367,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/V1/comment",
+					"raw": "http://localhost:8000/api/V1/post/7/comment ",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -368,7 +376,9 @@
 					"path": [
 						"api",
 						"V1",
-						"comment"
+						"post",
+						"7",
+						"comment "
 					]
 				}
 			},
@@ -382,7 +392,47 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/V1/post/1/comment/31",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"post",
+						"1",
+						"comment",
+						"31"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comment/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xY5EPaK2EHJRBST5ObADp4NZOMNjq5uQ7BmxquXscASSxsM0iKdUPwWfjKmBNYgdB7H4R1qfQ2gKmLaa",
 							"type": "string"
 						}
 					]
@@ -396,7 +446,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/api/V1/comment/1",
+					"raw": "http://localhost:8000/api/V1/post/1/comment/30",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -405,22 +455,24 @@
 					"path": [
 						"api",
 						"V1",
+						"post",
+						"1",
 						"comment",
-						"1"
+						"30"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "comment/id",
+			"name": "get posts of user",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Kv6JSSK8tMkMyhzJMU3mQcczxACDtDrtU0edTFiahOxVvmbKXs6r5DEpDtRnQbg4G9ELumOhx1GMBODe",
+							"value": "wj37pG9B9wvJCsjWvI2WoVfrrPEPJM9KGMUX7VYE8tWbuXWG0CDmipa8fbpJV7n6oSmVWMt8klZogzTl",
 							"type": "string"
 						}
 					]
@@ -434,7 +486,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/api/V1/comment/2",
+					"raw": "http://localhost:8000/api/V1/user/posts",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -443,8 +495,8 @@
 					"path": [
 						"api",
 						"V1",
-						"comment",
-						"2"
+						"user",
+						"posts"
 					]
 				}
 			},
