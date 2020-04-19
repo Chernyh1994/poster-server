@@ -37,15 +37,15 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a lists comment list for comment.
+     * Display a lists comment for comment.
      *
      * @param  int $post_id, $id
      * @return ResponseJson
      */
     public function show($post_id, $id)
     {
-        $comment = Comment::where('post_id', $post_id)->with(['author', 'comments'])->findOrFail($id);
-        return response()->json(compact('comment'));
+        $sub_comments = Comment::where('parent_id', '=', $id)->with(['author'])->get();
+        return response()->json(compact('sub_comments'));
     }
 
     /**
