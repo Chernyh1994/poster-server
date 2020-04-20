@@ -115,6 +115,57 @@
 			"response": []
 		},
 		{
+			"name": "update user form",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "vRPiPtKgtMEtNSvYErrT4PcuZaweWfxV5dMHeggRmOuzLjhS0nn3JUWOY5RQogt16suJGIPmCCTOM3mU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "name",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "_method",
+							"value": "PUT",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/V1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"V1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "post",
 			"request": {
 				"auth": {
@@ -406,7 +457,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/api/V1/post/1/comment/31",
+					"raw": "http://localhost:8000/api/V1/post/1/comment/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -418,7 +469,7 @@
 						"post",
 						"1",
 						"comment",
-						"31"
+						"1"
 					]
 				}
 			},

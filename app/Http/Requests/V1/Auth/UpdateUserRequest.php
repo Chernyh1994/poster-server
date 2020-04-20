@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\V1\Auth;
 
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -25,7 +27,10 @@ class UpdateUserRequest extends FormRequest
     {
         return [
         'name' => 'required|string|max:32',
-        'email' => 'sometimes|required|email|unique:users|max:255'
+        'email' => [
+            'required',
+            Rule::unique('users')->ignore(Auth::id()),
+            ],
         ];
     }
 }
