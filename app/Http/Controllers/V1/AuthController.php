@@ -79,4 +79,15 @@ class AuthController extends Controller
         $user->fill($data)->save();
         return response()->json(compact('user'));
     }
+
+    /**
+    * Update user.
+    *
+    * @return ResponseJson
+    */
+    public function userData($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json(compact('user'));
+    }
 }
