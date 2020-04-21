@@ -83,7 +83,7 @@ class AuthController extends Controller
     /**
     * Update user.
     *
-    * @return ResponseJson
+    * @return ResponseJson.
     */
     public function userData($id)
     {
