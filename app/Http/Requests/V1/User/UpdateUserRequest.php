@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\V1\Comment;
+namespace App\Http\Requests\V1\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class CreateCommentRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class CreateCommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,8 +24,7 @@ class CreateCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string|min:1|max:1000|',
-            'parent_id' => 'nullable|integer|exists:comments,id'
+            //
         ];
     }
 }

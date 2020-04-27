@@ -8,6 +8,7 @@ use App\Http\Requests\V1\Comment\CreateCommentRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use App\Models\Comment;
+use App\Models\Post;
 
 class CommentController extends Controller
 {
@@ -18,21 +19,23 @@ class CommentController extends Controller
      */
     public function index($id)
     {
-        $comments = Comment::where('post_id', $id)->with('author')->paginate(10);
+        $comments = Post::findOrFail($id)->comments(function($query) {
+            $query->with('author');
+        })->paginate(10);
         return response()->json(compact('comments'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Created new comment in storage.
      *
      * @param  CreateCommentRequest  $request
      * @return ResponseJson
      */
     public function store(CreateCommentRequest $request, $id)
     {
-        $data = Arr::add($request->validated(), 'author_id', Auth::id());
-        $data = Arr::add($data, 'post_id', $id);
-        $comment = Comment::create($data);
+        $comment = Post::findOrFail($id)->comments()->create(
+            Arr::add($request->validated(), 'author_id', Auth::id())
+        );
         return response()->json(compact('comment'));
     }
 
