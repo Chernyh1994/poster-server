@@ -17,7 +17,7 @@ class PostsTableSeeder extends Seeder
         for($i = 1; $i <= 50; $i++ ) {
             $authorId = ($i > 10) ? 1 : 2;
             $posts[] = [
-                'description' => $faker->realText(),
+                'content' => $faker->realText(),
                 'author_id' => $authorId,
             ];
         }

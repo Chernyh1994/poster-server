@@ -24,9 +24,21 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-        'name' => 'required|string|max:32',
-        'email' => 'required|string|email|unique:users,email|max:255',
-        'password' => 'required|string|min:8'
+            'name' => 'required|string|max:32',
+            'email' => 'required|string|email|unique:users,email|max:255',
+            'password' => 'required|string|min:8'
+        ];
+    }
+
+    /**
+     * Custom message for validation
+    *
+    * @return array
+    */
+    public function messages()
+    {
+        return [
+            'email.unique' => 'Email already exists!',
         ];
     }
 }

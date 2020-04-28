@@ -47,7 +47,7 @@ class CommentController extends Controller
      */
     public function show($post_id, $id)
     {
-        $sub_comments = Comment::where('parent_id', '=', $id)->with(['author'])->get();
+        $sub_comments = Comment::findOrFail($id)->with(['comments.author'])->get();
         return response()->json(compact('sub_comments'));
     }
 
@@ -74,8 +74,8 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         if($comment->author_id === Auth::id()){
             $comment->delete();
-            return response()->json(['message' => 'comment delete']);
+            return response()->json(['message' => 'Comment delete']);
         }
-        return response()->json(['message' => ' comment not delete'], 403);
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 }

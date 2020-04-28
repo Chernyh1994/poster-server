@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->string('path');
-            $table->string('mine')->nullable();
+            $table->string('mime')->nullable();
             $table->string('size')->nullable();
             $table->integer('post_id')->unsigned()->nullable();
             $table->timestamps();

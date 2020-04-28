@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\V1\Auth\UpdateUserRequest;
+use App\Http\Requests\V1\User\UpdateUserRequest;
 use Illuminate\Support\Arr;
 use App\Models\User;
 

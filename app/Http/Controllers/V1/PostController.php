@@ -31,8 +31,8 @@ class PostController extends Controller
      */
     public function showPostsUser()
     {
-        $user_posts = Post::where('author_id', Auth::id())->with(['author', 'images'])->paginate(10);
-        return response()->json(compact('user_posts'));
+        $posts = Post::where('author_id', Auth::id())->with(['author', 'images'])->paginate(10);
+        return response()->json(compact('posts'));
     }
 
     /**
@@ -48,8 +48,7 @@ class PostController extends Controller
         if($request->file('images')){
             $path = $request->file('images')->store('upload', 'public');
             $post->images()->create([
-                'path' => $path,
-                'post_id' => $post->id
+                'path' => $path
             ]);
         }
         return response()->json(compact('post'));
@@ -63,7 +62,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author', 'comments', 'images'])->findOrFail($id);
+        $post = Post::with(['author', 'images'])->findOrFail($id);
         return response()->json(compact('post'));
     }
 
@@ -76,7 +75,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //TODO:
     }
 
     /**
@@ -90,8 +89,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         if($post->author_id === Auth::id()){
             $post->delete();
-            return response()->json(['message' => 'post delete']);
+            return response()->json(['message' => 'Post delete']);
         }
-        return response()->json(['message' => ' post not delete'], 403);
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 }

@@ -14,7 +14,7 @@ class CreatePostRequest extends FormRequest
     */
     public function authorize()
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class CreatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string|min:1|max:2000|',
+            'content' => 'required|string|min:1|max:2000|',
         ];
     }
 }

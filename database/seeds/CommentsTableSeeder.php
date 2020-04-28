@@ -18,7 +18,7 @@ class CommentsTableSeeder extends Seeder
             $postId = rand(1,10);
             $parentId = ($i > 10) ? rand(1,10) : null;
             $comments[] = [
-               'description' => Str::random(20),
+               'content' => Str::random(20),
                'post_id' => $postId,
                'parent_id' => $parentId,
                'author_id' => $authorId,
