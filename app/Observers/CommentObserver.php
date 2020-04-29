@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Comment;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class CommentObserver
@@ -16,7 +15,8 @@ class CommentObserver
      */
     public function created(Comment $comment)
     {
-        Arr::add($comment, 'author_id', Auth::id());
+        $comment->author_id = Auth::id();
+        $comment->save();
     }
 
     /**
@@ -27,7 +27,7 @@ class CommentObserver
      */
     public function updated(Comment $comment)
     {
-        //
+        //TODO:
     }
 
     /**

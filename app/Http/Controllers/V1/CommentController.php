@@ -33,9 +33,11 @@ class CommentController extends Controller
      */
     public function store(CreateCommentRequest $request, $id)
     {
+        $data = $request->validated();
         $comment = Post::findOrFail($id)->comments()->create(
             Arr::add($request->validated(), 'author_id', Auth::id())
         );
+        // TODO: add odservers
         return response()->json(compact('comment'));
     }
 
@@ -47,7 +49,7 @@ class CommentController extends Controller
      */
     public function show($post_id, $id)
     {
-        $sub_comments = Comment::findOrFail($id)->with(['comments.author'])->get();
+        $sub_comments = Post::findOrFail($post_id)->comments()->with(['comments.author'])->findOrFail($id);
         return response()->json(compact('sub_comments'));
     }
 
@@ -60,7 +62,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //TODO
     }
 
     /**

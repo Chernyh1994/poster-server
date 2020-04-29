@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Arr;
 use App\Models\Post;
 use App\Models\Image;
 use App\Http\Requests\V1\Post\CreatePostRequest;
@@ -31,7 +30,7 @@ class PostController extends Controller
      */
     public function showPostsUser()
     {
-        $posts = Post::where('author_id', Auth::id())->with(['author', 'images'])->paginate(10);
+        $posts = Auth::user()->posts()->with(['author', 'images'])->paginate(10);
         return response()->json(compact('posts'));
     }
 
@@ -61,7 +60,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author', 'images'])->findOrFail($id);
+        $post = Post::with('author')->findOrFail($id);
         return response()->json(compact('post'));
     }
 

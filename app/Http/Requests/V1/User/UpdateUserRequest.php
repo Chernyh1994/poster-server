@@ -30,6 +30,7 @@ class UpdateUserRequest extends FormRequest
                 'required',
                 Rule::unique('users')->ignore(Auth::id()),
             ],
+            'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ];
     }
 }

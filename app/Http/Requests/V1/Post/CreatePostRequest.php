@@ -26,6 +26,7 @@ class CreatePostRequest extends FormRequest
     {
         return [
             'content' => 'required|string|min:1|max:2000|',
+            'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ];
     }
 }

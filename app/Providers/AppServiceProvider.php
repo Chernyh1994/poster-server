@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Observers\PostObserver;
+use App\Observers\CommentObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Post;
+use App\Models\Comment;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Post::observe(PostObserver::class);
+        Comment::observe(CommentObserver::class);
     }
 }
