@@ -43,8 +43,7 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-        $data = Arr::add($request->validated(), 'author_id', Auth::id());
-        $post = Post::create($data);
+        $post = Auth::user()->posts()->create($request->validated());
         if($request->file('images')){
             $path = $request->file('images')->store('upload', 'public');
             $post->images()->create([

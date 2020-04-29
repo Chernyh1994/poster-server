@@ -16,7 +16,7 @@ class PostObserver
      */
     public function created(Post $post)
     {
-        dd($post->author_id);
+        //
     }
 
     /**
