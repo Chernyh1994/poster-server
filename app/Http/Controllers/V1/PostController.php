@@ -60,7 +60,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with('author')->findOrFail($id);
+        $post = Post::with(['author', 'images'])->findOrFail($id);
         return response()->json(compact('post'));
     }
 

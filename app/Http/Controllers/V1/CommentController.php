@@ -20,8 +20,8 @@ class CommentController extends Controller
     public function index($id)
     {
         $comments = Post::findOrFail($id)->comments(function($query) {
-            $query->with('author');
-        })->paginate(10);
+            $query;
+        })->with('author')->paginate(10);
         return response()->json(compact('comments'));
     }
 
