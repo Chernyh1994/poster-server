@@ -28,7 +28,7 @@ class PostController extends Controller
      *
      * @return ResponseJson
      */
-    public function showPostsUser()
+    public function showMyPosts()
     {
         $posts = Auth::user()->posts()->with(['author', 'images'])->paginate(10);
         return response()->json(compact('posts'));

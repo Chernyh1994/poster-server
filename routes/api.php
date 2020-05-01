@@ -8,7 +8,7 @@ Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
 
     Route::middleware('auth:sanctum')->group(function() {
         Route::apiResource('post', 'PostController');
-        Route::get('user/posts', 'PostController@showPostsUser');
+        Route::get('user/posts', 'PostController@showMyPosts');
 
         Route::apiResource('post.comment', 'CommentController');
         
