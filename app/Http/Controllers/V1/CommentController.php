@@ -21,7 +21,7 @@ class CommentController extends Controller
     {
         $comments = Post::findOrFail($id)->comments(function($query) {
             $query;
-        })->with('author')->paginate(10);
+        })->with(['comments.author', 'author'])->paginate(10);
         return response()->json(compact('comments'));
     }
 
@@ -42,15 +42,15 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a lists comment for comment.
+     * Show comment with under comment.
      *
      * @param  int $post_id, $id
      * @return ResponseJson
      */
     public function show($post_id, $id)
     {
-        $sub_comments = Post::findOrFail($post_id)->comments()->with(['comments.author'])->findOrFail($id);
-        return response()->json(compact('sub_comments'));
+        $comment = Post::findOrFail($post_id)->comments()->with(['comments.author'])->findOrFail($id);
+        return response()->json(compact('comment'));
     }
 
     /**
