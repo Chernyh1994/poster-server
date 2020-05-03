@@ -15,8 +15,8 @@ class CommentObserver
      */
     public function created(Comment $comment)
     {
-        $comment->author_id = Auth::id();
-        $comment->save();
+        // $comment->author_id = Auth::id();
+        // $comment->save();
     }
 
     /**
