@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author', 'images'])->paginate(10);
+        $posts = Post::with(['author', 'images'])->latest()->paginate(10);
         return response()->json(compact('posts'));
     }
 
@@ -30,7 +30,7 @@ class PostController extends Controller
      */
     public function showMyPosts()
     {
-        $posts = Auth::user()->posts()->with(['author', 'images'])->paginate(10);
+        $posts = Auth::user()->posts()->with(['author', 'images'])->latest()->paginate(10);
         return response()->json(compact('posts'));
     }
 
