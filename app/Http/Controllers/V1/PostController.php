@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author', 'images'])->latest()->paginate(10);
+        $posts = Post::with(['author', 'images', 'commentsCount'])->latest()->paginate(10);
         return response()->json(compact('posts'));
     }
 

@@ -39,4 +39,11 @@ class Post extends Model
         return $this->hasMany(Image::class);
     }
 
+    public function commentsCount()
+    {
+        return $this->comments()
+            ->selectRaw('post_id, count(*) as aggregate')
+            ->groupBy('post_id');
+    }
+
 }
