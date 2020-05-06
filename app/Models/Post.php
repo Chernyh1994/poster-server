@@ -46,4 +46,8 @@ class Post extends Model
             ->groupBy('post_id');
     }
 
+    public function favorites()
+    {
+        return $this->belongsTo(Favorite::class);
+    }
 }

@@ -39,4 +39,9 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id');
     }
 
+    public function favorites()
+    {
+        return $this->belongsTo(Favorite::class);
+    }
+
 }

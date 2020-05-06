@@ -30,7 +30,7 @@ class PostController extends Controller
      */
     public function showMyPosts()
     {
-        $posts = Auth::user()->posts()->with(['author', 'images'])->latest()->paginate(10);
+        $posts = Auth::user()->posts()->with(['author', 'images', 'commentsCount'])->latest()->paginate(10);
         return response()->json(compact('posts'));
     }
 
