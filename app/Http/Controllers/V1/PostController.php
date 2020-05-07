@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Post;
 use App\Models\Image;
 use App\Http\Requests\V1\Post\CreatePostRequest;
@@ -73,7 +74,11 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //TODO:
+        $post = Post::findOrFail($id);
+        $data = $request->validated();
+        Gate::authorize('update-post', $post);
+        $post->fill($data)->save();
+        return response()->json(compact('post'));
     }
 
     /**
@@ -85,10 +90,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        if($post->author_id === Auth::id()){
-            $post->delete();
-            return response()->json(['message' => 'Post delete']);
-        }
-        return response()->json(['message' => 'Unauthorized'], 403);
+        Gate::authorize('delete-post', $post);
+        $post->delete();
+        return response()->json(['message' => 'Post delete']);
     }
 }
