@@ -8,58 +8,13 @@ use Illuminate\Support\Facades\Auth;
 class CommentObserver
 {
     /**
-     * Handle the comment "created" event.
+     * Handle the comment "creating" event.
      *
      * @param  \App\Models\Comment  $comment
      * @return void
      */
-    public function created(Comment $comment)
+    public function creating(Comment $comment)
     {
-        // $comment->author_id = Auth::id();
-        // $comment->save();
-    }
-
-    /**
-     * Handle the comment "updated" event.
-     *
-     * @param  \App\Comment  $comment
-     * @return void
-     */
-    public function updated(Comment $comment)
-    {
-        //TODO:
-    }
-
-    /**
-     * Handle the comment "deleted" event.
-     *
-     * @param  \App\Comment  $comment
-     * @return void
-     */
-    public function deleted(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Handle the comment "restored" event.
-     *
-     * @param  \App\Comment  $comment
-     * @return void
-     */
-    public function restored(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Handle the comment "force deleted" event.
-     *
-     * @param  \App\Comment  $comment
-     * @return void
-     */
-    public function forceDeleted(Comment $comment)
-    {
-        //
+        $comment->author_id = Auth::id();
     }
 }

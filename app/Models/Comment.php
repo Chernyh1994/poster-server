@@ -12,7 +12,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'content', 'parent_id', 'author_id'
+        'content', 'parent_id'
     ];
 
     /**
@@ -41,7 +41,7 @@ class Comment extends Model
 
     public function favorites()
     {
-        return $this->belongsTo(Favorite::class);
+        return $this->hasMany(Favorite::class);
     }
 
 }

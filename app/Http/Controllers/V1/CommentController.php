@@ -34,10 +34,7 @@ class CommentController extends Controller
     public function store(CreateCommentRequest $request, $id)
     {
         $data = $request->validated();
-        $comment = Post::findOrFail($id)->comments()->create(
-            Arr::add($request->validated(), 'author_id', Auth::id())
-        );
-        // TODO: add odservers
+        $comment = Post::findOrFail($id)->comments()->create($data);
         return response()->json(compact('comment'));
     }
 
