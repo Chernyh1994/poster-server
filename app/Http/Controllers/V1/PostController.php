@@ -39,13 +39,14 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  CreatePostRequest $request
+     * 
      * @return ResponseJson
      */
     public function store(CreatePostRequest $request)
     {
         $post = Auth::user()->posts()->create($request->validated());
         if($request->file('images')){
-            $path = $request->file('images')->store('upload', 'public');
+            $path = $request->file('images')->store('upload/postImages', 'public');
             $post->images()->create([
                 'path' => $path
             ]);
@@ -69,6 +70,7 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request  $request
+     * 
      * @param  int  $id
      * @return Response
      */

@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favorite::class, 'author_id');
     }
+
+    public function images()
+    {
+        return $this->hasOne(Image::class, 'author_id');
+    }
 }

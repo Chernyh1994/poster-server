@@ -3,54 +3,64 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\V1\User\UpdateUserRequest;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Http\Requests\V1\User\UpdateUserRequest;
 
 class UserController extends Controller
 {
     /**
      * Handle an authorized user profile.
      *
-     * @param Request $request
-     *
      * @return ResponseJson
      */
-    public function myProfile(Request $request)
+    public function myProfile()
     {
-        $user = Auth::user();
+        $user = User::with('images')->findOrFail(Auth::id());
         return response()->json(compact('user'));
     }
 
     /**
-    * Update user.
-    *
-    * @param UpdateUserRequest $request
-    *
-    * @return ResponseJson
-    */
-    public function update(UpdateUserRequest $request)
-    {
-        $user = User::findOrFail(Auth::id());
-        $data = $request->validated();
-        if($request->file('avatar')){
-            $path = $request->file('avatar')->store('upload/avatars', 'public');
-            $data = Arr::add($data, 'avatar_path', $path);
-        }
-        $user->fill($data)->save();
-        return response()->json(compact('user'));
-    }
-
-    /**
-    * Handle an user profile.
-    *
-    * @return ResponseJson
-    */
+     * Handle an user profile.
+     * 
+     * @param  int  $id
+     * 
+     * @return ResponseJson
+     */
     public function userProfile($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('images')->findOrFail($id);
+        return response()->json(compact('user'));
+    }
+
+    /**
+     * Update user.
+     *
+     * @param UpdateUserRequest $request
+     * 
+     * @return ResponseJson
+     */
+    public function update(UpdateUserRequest $request)
+    {        
+        $user = Auth::user();
+        $data = $request->validated();
+        if($request->file('avatar')) {
+            $path = $request->file('avatar')->store('upload/avatars', 'public');
+            // $test = Storage::url($request->file('avatar')->hashName());
+            $test = Storage::disk('public')->path($request->file('avatar')->hashName());
+            // $test = $request->file('avatar')->hashName();
+
+            $user->images()->create([
+                'path' => $path,
+                'name' => $test,
+                'mime' => $request->file('avatar')->getMimeType(),
+                'size' => $request->file('avatar')->getSize(),
+            ]);
+            // $url = Storage::url();
+            // $request->file('avatar')->getClientOriginalName(),
+        };
+        $user->fill($data)->save();
         return response()->json(compact('user'));
     }
 }

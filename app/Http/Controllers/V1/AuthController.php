@@ -43,7 +43,7 @@ class AuthController extends Controller
         $credentials = $request->validated();
         if (Auth::once($credentials))
         {
-            $user = Auth::user();
+            $user = User::with('images')->findOrFail(Auth::id());
             $token = $user->createToken($request->userAgent())->plainTextToken;
             return response()->json(compact('user', 'token'));
         }

@@ -20,11 +20,6 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Test User',
                 'email' => 'test@gmail.com',
                 'password' => Hash::make('password'),
-            ],
-            [
-                'name' => Str::random(10),
-                'email' => Str::random(10).'@gmail.com',
-                'password' => Hash::make(Str::random(10)),
             ]
         ];
 
