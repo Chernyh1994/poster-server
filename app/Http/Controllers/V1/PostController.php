@@ -46,9 +46,14 @@ class PostController extends Controller
     {
         $post = Auth::user()->posts()->create($request->validated());
         if($request->file('images')){
-            $path = $request->file('images')->store('upload/postImages', 'public');
+            $request->file('images')->store('upload/postImages', 'public');
+            $name = $request->file('images')->hashName();
+            $path = asset('storage/upload/postImages/'.$name);
             $post->images()->create([
-                'path' => $path
+                'path' => $path,
+                'name' => $name,
+                'mime' => $request->file('images')->getMimeType(),
+                'size' => $request->file('images')->getSize(),
             ]);
         }
         return response()->json(compact('post'));

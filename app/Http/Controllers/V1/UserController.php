@@ -43,23 +43,20 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request)
     {        
-        $user = Auth::user();
-        $data = $request->validated();
         if($request->file('avatar')) {
-            $path = $request->file('avatar')->store('upload/avatars', 'public');
-            // $test = Storage::url($request->file('avatar')->hashName());
-            $test = Storage::disk('public')->path($request->file('avatar')->hashName());
-            // $test = $request->file('avatar')->hashName();
+            $request->file('avatar')->store('upload/avatars', 'public');
+            $name = $request->file('avatar')->hashName();
+            $path = asset('storage/upload/avatars/'.$name);
 
-            $user->images()->create([
+            Auth::user()->images()->create([
                 'path' => $path,
-                'name' => $test,
+                'name' => $name,
                 'mime' => $request->file('avatar')->getMimeType(),
                 'size' => $request->file('avatar')->getSize(),
             ]);
-            // $url = Storage::url();
-            // $request->file('avatar')->getClientOriginalName(),
         };
+        $user = User::with('images')->findOrFail(Auth::id());
+        $data = $request->validated();
         $user->fill($data)->save();
         return response()->json(compact('user'));
     }
