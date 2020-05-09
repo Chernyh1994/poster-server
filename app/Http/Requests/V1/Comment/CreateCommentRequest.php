@@ -3,7 +3,6 @@
 namespace App\Http\Requests\V1\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class CreateCommentRequest extends FormRequest
 {

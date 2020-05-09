@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\V1\Post;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreatePostRequest extends FormRequest

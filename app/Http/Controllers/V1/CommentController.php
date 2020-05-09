@@ -4,11 +4,13 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\V1\Comment\CreateCommentRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Http\Requests\V1\Comment\CreateCommentRequest;
+use App\Http\Requests\V1\Comment\UpdateCommentRequest;
+
 
 class CommentController extends Controller
 {
@@ -53,13 +55,17 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  UpdateCommentRequest  $request
      * @param  int  $id
      * @return ResponseJson
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCommentRequest $request, $post_id, $id)
     {
-        //TODO
+        $comment = Comment::findOrFail($id);
+        $data = $request->validated();
+        Gate::authorize('update-comment', $comment);
+        $comment->fill($data)->save();
+        return response()->json(compact('comment'));
     }
 
     /**
@@ -71,10 +77,8 @@ class CommentController extends Controller
     public function destroy($post_id, $id)
     {
         $comment = Comment::findOrFail($id);
-        if($comment->author_id === Auth::id()){
-            $comment->delete();
-            return response()->json(['message' => 'Comment delete']);
-        }
-        return response()->json(['message' => 'Unauthorized'], 403);
+        $comment->delete();
+        Gate::authorize('delete-comment', $comment);
+        return response()->json(['message' => 'Successful']);
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\Post;
 use App\Models\Image;
 use App\Http\Requests\V1\Post\CreatePostRequest;
+use App\Http\Requests\V1\Post\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -74,12 +75,13 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request  $request
+     * @param UpdatePostRequest  $request
      * 
      * @param  int  $id
+     * 
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, $id)
     {
         $post = Post::findOrFail($id);
         $data = $request->validated();
@@ -99,6 +101,6 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         Gate::authorize('delete-post', $post);
         $post->delete();
-        return response()->json(['message' => 'Post delete']);
+        return response()->json(['message' => 'Successful']);
     }
 }
