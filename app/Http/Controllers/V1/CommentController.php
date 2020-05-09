@@ -23,7 +23,7 @@ class CommentController extends Controller
     {
         $comments = Post::findOrFail($id)->comments(function($query) {
             $query;
-        })->with(['comments.author', 'author'])->latest()->paginate(10);
+        })->with(['comments.author', 'author.images'])->latest()->paginate(10);
         return response()->json(compact('comments'));
     }
 

@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author', 'images', 'commentsCount'])->latest()->paginate(10);
+        $posts = Post::with(['author.images', 'images', 'commentsCount'])->latest()->paginate(10);
         return response()->json(compact('posts'));
     }
 
@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function showMyPosts()
     {
-        $posts = Auth::user()->posts()->with(['author', 'images', 'commentsCount'])->latest()->paginate(10);
+        $posts = Auth::user()->posts()->with(['author.images', 'images', 'commentsCount'])->latest()->paginate(10);
         return response()->json(compact('posts'));
     }
 
@@ -68,7 +68,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author', 'images'])->findOrFail($id);
+        $post = Post::with(['author.images', 'images'])->findOrFail($id);
         return response()->json(compact('post'));
     }
 
