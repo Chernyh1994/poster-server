@@ -44,11 +44,14 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request)
     {        
         if($request->file('avatar')) {
+            if(Auth::user()->find(1)->images) {
+                Storage::disk('public')->delete('upload/avatars/'.Auth::user()->find(1)->images->name);
+            }
             $request->file('avatar')->store('upload/avatars', 'public');
             $name = $request->file('avatar')->hashName();
             $path = asset('storage/upload/avatars/'.$name);
 
-            Auth::user()->images()->create([
+            Auth::user()->images()->updateOrCreate([],[
                 'path' => $path,
                 'name' => $name,
                 'mime' => $request->file('avatar')->getMimeType(),

@@ -11,7 +11,9 @@ class Image extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'path', 'name', 'mime', 'size'
+    ];
 
     public function post()
     {
