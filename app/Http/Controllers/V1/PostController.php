@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Post;
-use App\Models\Image;
 use App\Http\Requests\V1\Post\CreatePostRequest;
 use App\Http\Requests\V1\Post\UpdatePostRequest;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -49,6 +48,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $post = Auth::user()->posts()->create($data);
+
         if($request->file('images')){
             $request->file('images')->store('upload/postImages', 'public');
             $name = $request->file('images')->hashName();
@@ -71,7 +71,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author.avatar', 'images'])->findOrFail($id);
+        $post = Post::with(['author.avatar', 'images', 'video'])->findOrFail($id);
 
         return response()->json(compact('post'));
     }
