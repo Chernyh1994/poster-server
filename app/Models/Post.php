@@ -24,30 +24,43 @@ class Post extends Model
         'updated_at'
     ];
 
+    /**
+     * Get the user that owns the post.
+     */
     public function author()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get all of the post's comments.
+     */
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany(Comment::class, 'commentable');
     }
-
+    
+    /**
+     * Get all of the post's images.
+     */
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->morphMany(Image::class, 'imagetable');
     }
 
-    public function commentsCount()
+    /**
+     * Get the video record associated with the post.
+     */
+    public function video()
     {
-        return $this->comments()
-            ->selectRaw('post_id, count(*) as aggregate')
-            ->groupBy('post_id');
+        return $this->hasOne(Video::class);
     }
 
-    public function favorites()
+    /**
+     * Get all of the like's posts.
+     */
+    public function likes()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->morphMany(Like::class, 'liketable');
     }
 }

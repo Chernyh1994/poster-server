@@ -21,7 +21,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author.images', 'images', 'commentsCount'])->latest()->paginate(10);
+        $posts = Post::with(['author.avatar', 'images', 'video'])->withCount(['comments', 'likes'])->latest()->paginate(10);
+
         return response()->json(compact('posts'));
     }
 
@@ -32,7 +33,8 @@ class PostController extends Controller
      */
     public function showMyPosts()
     {
-        $posts = Auth::user()->posts()->with(['author.images', 'images', 'commentsCount'])->latest()->paginate(10);
+        $posts = Auth::user()->posts()->with(['author.avatar', 'images', 'video'])->withCount(['comments', 'likes'])->latest()->paginate(10);
+        
         return response()->json(compact('posts'));
     }
 
@@ -45,7 +47,8 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-        $post = Auth::user()->posts()->create($request->validated());
+        $data = $request->validated();
+        $post = Auth::user()->posts()->create($data);
         if($request->file('images')){
             $request->file('images')->store('upload/postImages', 'public');
             $name = $request->file('images')->hashName();
@@ -68,7 +71,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author.images', 'images'])->findOrFail($id);
+        $post = Post::with(['author.avatar', 'images'])->findOrFail($id);
+
         return response()->json(compact('post'));
     }
 
@@ -78,15 +82,16 @@ class PostController extends Controller
      * @param UpdatePostRequest  $request
      * 
      * @param  int  $id
-     * 
      * @return Response
      */
     public function update(UpdatePostRequest $request, $id)
     {
-        $post = Post::findOrFail($id);
         $data = $request->validated();
         Gate::authorize('update-post', $post);
-        $post->fill($data)->save();
+
+        $post = Post::findOrFail($id);
+        $post->update($data);
+
         return response()->json(compact('post'));
     }
 
@@ -98,9 +103,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
         Gate::authorize('delete-post', $post);
+
+        $post = Post::findOrFail($id);
         $post->delete();
+
         return response()->json(['message' => 'Successful']);
     }
 }

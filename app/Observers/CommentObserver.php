@@ -15,6 +15,8 @@ class CommentObserver
      */
     public function creating(Comment $comment)
     {
-        $comment->author_id = Auth::id();
+        if(!$comment->author_id){
+            $comment->author_id = Auth::id();
+        }
     }
 }

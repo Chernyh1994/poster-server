@@ -21,9 +21,8 @@ class CommentController extends Controller
      */
     public function index($id)
     {
-        $comments = Post::findOrFail($id)->comments(function($query) {
-            $query;
-        })->with(['comments.author', 'author.images'])->latest()->paginate(10);
+        $comments = Post::findOrFail($id)->comments()->with(['comments.author.avatar', 'author.avatar'])->latest()->paginate(10);
+
         return response()->json(compact('comments'));
     }
 
@@ -36,7 +35,12 @@ class CommentController extends Controller
     public function store(CreateCommentRequest $request, $id)
     {
         $data = $request->validated();
-        $comment = Post::findOrFail($id)->comments()->create($data);
+        if(isset($data['parent_id'])) {
+            $comment = Comment::findOrFail($data['parent_id'])->comments()->create($data);
+        } else {
+            $comment = Post::findOrFail($id)->comments()->create($data);
+        }
+
         return response()->json(compact('comment'));
     }
 
@@ -49,6 +53,7 @@ class CommentController extends Controller
     public function show($post_id, $id)
     {
         $comment = Post::findOrFail($post_id)->comments()->with(['comments.author'])->findOrFail($id);
+
         return response()->json(compact('comment'));
     }
 
@@ -64,7 +69,9 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         $data = $request->validated();
         Gate::authorize('update-comment', $comment);
+
         $comment->fill($data)->save();
+
         return response()->json(compact('comment'));
     }
 
@@ -77,8 +84,8 @@ class CommentController extends Controller
     public function destroy($post_id, $id)
     {
         $comment = Comment::findOrFail($id);
-        $comment->delete();
         Gate::authorize('delete-comment', $comment);
+        $comment->delete();
         return response()->json(['message' => 'Successful']);
     }
 }

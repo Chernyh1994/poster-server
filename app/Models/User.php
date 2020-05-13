@@ -37,23 +37,35 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get the avatar record associated with the user.
+     */
+    public function avatar()
+    {
+        return $this->morphOne(Image::class, 'imagetable');
+    }
+
+    /**
+     * Get all of the user's posts.
+     */
     public function posts()
     {
         return $this->hasMany(Post::class, 'author_id');
     }
 
+    /**
+     * Get all of the user's comments.
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'author_id');
     }
 
-    public function favorites()
+    /**
+     * Get all of the user's likes.
+     */
+    public function likes()
     {
-        return $this->hasMany(Favorite::class, 'author_id');
-    }
-
-    public function images()
-    {
-        return $this->hasOne(Image::class, 'author_id');
+        return $this->hasMany(Like::class, 'author_id');
     }
 }

@@ -21,27 +21,37 @@ class Comment extends Model
      * @var array
      */
     protected $hidden = [
-        'updated_at'
+        'updated_at', 'commentable_id', 'commentable_type'
     ];
-
+    /**
+     * Get the user that owns the comment.
+     */
     public function author()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function post()
+    /**
+     * Get the owning commentable model.
+     */
+    public function commentable()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphTo();
     }
 
+    /**
+     * Get all of the post's comments.
+     */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'parent_id');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
-    public function favorites()
+    /**
+     * Get all of the like's comments.
+     */
+    public function likes()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->morphMany(Like::class, 'liketable');
     }
-
 }
