@@ -68,7 +68,7 @@ class CommentController extends Controller
     {
         $comment = Comment::findOrFail($id);
         $data = $request->validated();
-        Gate::authorize('update-comment', $comment);
+        Gate::authorize('update', $comment);
 
         $comment->fill($data)->save();
 
@@ -84,7 +84,7 @@ class CommentController extends Controller
     public function destroy($post_id, $id)
     {
         $comment = Comment::findOrFail($id);
-        Gate::authorize('delete-comment', $comment);
+        Gate::authorize('delete', $comment);
         $comment->delete();
         return response()->json(['message' => 'Successful']);
     }

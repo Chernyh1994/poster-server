@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\V1\Post\CreatePostRequest;
 use App\Http\Requests\V1\Post\UpdatePostRequest;
 use App\Models\Post;
@@ -46,26 +47,41 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-        $data = $request->validated();
-        $arr_images = $request->file('media');
-        $post = Auth::user()->posts()->create($data);
+        DB::beginTransaction();
 
-        if($arr_images) {
-            foreach($arr_images as $image) {
-                $image->store('upload/postImages', 'public');
+        try {
+            $data = $request->validated();
+            $arr_images = $request->file('media');
+            $video_url = isset($data['video_url']);
 
-                $name = $image->hashName();
-                $path = asset('storage/upload/postImages/'.$name);
+            $post = Auth::user()->posts()->create($data);
 
-                $post->images()->create([
-                    'path' => $path,
-                    'name' => $name,
-                    'mime' => $image->getMimeType(),
-                    'size' => $image->getSize(),
-                ]);
-            };
+            if($arr_images) {
+                foreach($arr_images as $image) {
+                    $image->store('upload/postImages', 'public');
+
+                    $name = $image->hashName();
+                    $path = asset('storage/upload/postImages/'.$name);
+
+                    $post->images()->create([
+                        'path' => $path,
+                        'name' => $name,
+                        'mime' => $image->getMimeType(),
+                        'size' => $image->getSize(),
+                    ]);
+                };
+            }
+
+            if($video_url) {
+                $post->video()->create(['url' => $data['video_url']]);
+            }
+            
+            DB::commit();
+            return response()->json(compact('post'));
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return response()->json(['message' => 'Something went wrong try again.'], 422);
         }
-        return response()->json(compact('post'));
     }
 
     /**
@@ -92,7 +108,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, $id)
     {
         $data = $request->validated();
-        Gate::authorize('update-post', $post);
+        Gate::authorize('update', $post);
 
         $post = Post::findOrFail($id);
         $post->update($data);
@@ -108,9 +124,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Gate::authorize('delete-post', $post);
-
         $post = Post::findOrFail($id);
+        Gate::authorize('delete', $post);
+
         $post->delete();
 
         return response()->json(['message' => 'Successful']);
