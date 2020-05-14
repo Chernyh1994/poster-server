@@ -25,8 +25,9 @@ class CreatePostRequest extends FormRequest
     {
         return [
             'content' => 'required|string|min:1|max:2000|',
-            'media' => 'nullable|mimes:jpeg,jpg,png,gif|file|size:1512|max:5',
-            'video_url' => 'nullable|url|max:1'
+            'video_url' => 'nullable|url',
+            'media' => 'array|max:5',
+            'media.*' => 'nullable|mimes:jpeg,jpg,png,gif|file|max:1512',
         ];
     }
 }

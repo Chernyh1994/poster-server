@@ -47,18 +47,23 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         $data = $request->validated();
+        $arr_images = $request->file('media');
         $post = Auth::user()->posts()->create($data);
 
-        if($request->file('images')){
-            $request->file('images')->store('upload/postImages', 'public');
-            $name = $request->file('images')->hashName();
-            $path = asset('storage/upload/postImages/'.$name);
-            $post->images()->create([
-                'path' => $path,
-                'name' => $name,
-                'mime' => $request->file('images')->getMimeType(),
-                'size' => $request->file('images')->getSize(),
-            ]);
+        if($arr_images) {
+            foreach($arr_images as $image) {
+                $image->store('upload/postImages', 'public');
+
+                $name = $image->hashName();
+                $path = asset('storage/upload/postImages/'.$name);
+
+                $post->images()->create([
+                    'path' => $path,
+                    'name' => $name,
+                    'mime' => $image->getMimeType(),
+                    'size' => $image->getSize(),
+                ]);
+            };
         }
         return response()->json(compact('post'));
     }
