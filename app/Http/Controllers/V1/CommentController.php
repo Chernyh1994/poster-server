@@ -24,11 +24,11 @@ class CommentController extends Controller
     {
         $comments = Post::findOrFail($id)->comments()
             ->with(['comments.author.avatar', 'author.avatar'])
-            ->withCount(['comments', 'likes'])
             ->latest()
             ->paginate(10);
 
         return response()->json(compact('comments'));
+
     }
 
     /**
@@ -50,19 +50,22 @@ class CommentController extends Controller
     }
 
     /**
-     * Show comment with under comment.
+     * Display a lists comment for post.
      *
      * @param  int $post_id, $id
      * @return ResponseJson
      */
     public function show($post_id, $id)
     {
-        $comment = Post::findOrFail($post_id)->comments()
-            ->with(['comments.author', 'author.avatar'])
+        $comments = Post::findOrFail($post_id)->comments()
+            ->with(['comments.author.avatar', 'author.avatar'])
             ->withCount(['comments', 'likes'])
-            ->findOrFail($id);
+            ->where('id', '>', $id)
+            ->take(10)
+            // ->latest()
+            ->get();
 
-        return response()->json(compact('comment'));
+        return response()->json(compact('comments'));
     }
 
     /**
