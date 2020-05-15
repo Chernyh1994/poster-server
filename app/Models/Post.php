@@ -59,7 +59,7 @@ class Post extends Model
     /**
      * Get all of the like's posts.
      */
-    public function like()
+    public function likes()
     {
         return $this->morphMany(Like::class, 'liketable');
     }

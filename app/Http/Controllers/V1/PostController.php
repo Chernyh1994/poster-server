@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\V1\Post\CreatePostRequest;
 use App\Http\Requests\V1\Post\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\Like;
 
 class PostController extends Controller
 {
@@ -155,7 +156,6 @@ class PostController extends Controller
         return response()->json(['message' => 'Successful']);
     }
 
-
     /**
      * Display a lists post for user.
      *
@@ -167,7 +167,6 @@ class PostController extends Controller
         
         return response()->json(compact('posts'));
     }
-
 
     /**
      * Add a like for post.
@@ -182,9 +181,14 @@ class PostController extends Controller
         $post = Post::findOrFail($post_id);
         $user = Auth::user();
 
-        $like = $post->like();
+        $like = $user->likes()->where('liketable_id', $post_id)->first();
+        if($like) {
+           $like->delete();
+           return response()->json(['message' => 'Delete successful']);
+        }
+        $like = new Like;
         $like->author_id = $user->id;
-        $like->save();
+        $post->likes()->save($like);
 
         return response()->json(compact('like'));
     }
