@@ -24,7 +24,7 @@ class UpdateCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required|string|min:1|max:1000|',
+            'content' => 'required|string|min:1|max:1000',
         ];
     }
 }

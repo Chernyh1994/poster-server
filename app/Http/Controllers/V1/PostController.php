@@ -22,7 +22,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author.avatar', 'images', 'video'])->withCount(['comments', 'likes'])->latest()->paginate(10);
+        $posts = Post::with(['author.avatar', 'images', 'video'])
+            ->withCount(['comments', 'likes'])
+            ->latest()
+            ->paginate(10);
 
         return response()->json(compact('posts'));
     }
@@ -66,6 +69,7 @@ class PostController extends Controller
             }
             
             DB::commit();
+            $post->refresh();
 
             return response()->json(compact('post'));
         } catch (\Throwable $e) {
@@ -131,6 +135,7 @@ class PostController extends Controller
             }
             
             DB::commit();
+            $post->refresh();
 
             return response()->json(compact('post'));
         } catch (\Throwable $e) {
@@ -163,7 +168,11 @@ class PostController extends Controller
      */
     public function showMyPosts()
     {
-        $posts = Auth::user()->posts()->with(['author.avatar', 'images', 'video'])->withCount(['comments', 'likes'])->latest()->paginate(10);
+        $posts = Auth::user()->posts()
+            ->with(['author.avatar', 'images', 'video'])
+            ->withCount(['comments', 'likes'])
+            ->latest()
+            ->paginate(10);
         
         return response()->json(compact('posts'));
     }

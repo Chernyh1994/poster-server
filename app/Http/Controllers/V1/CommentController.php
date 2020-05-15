@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Like;
 use App\Http\Requests\V1\Comment\CreateCommentRequest;
 use App\Http\Requests\V1\Comment\UpdateCommentRequest;
 
@@ -21,7 +22,11 @@ class CommentController extends Controller
      */
     public function index($id)
     {
-        $comments = Post::findOrFail($id)->comments()->with(['comments.author.avatar', 'author.avatar'])->latest()->paginate(10);
+        $comments = Post::findOrFail($id)->comments()
+            ->with(['comments.author.avatar', 'author.avatar'])
+            ->withCount(['comments', 'likes'])
+            ->latest()
+            ->paginate(10);
 
         return response()->json(compact('comments'));
     }
@@ -52,7 +57,10 @@ class CommentController extends Controller
      */
     public function show($post_id, $id)
     {
-        $comment = Post::findOrFail($post_id)->comments()->with(['comments.author'])->findOrFail($id);
+        $comment = Post::findOrFail($post_id)->comments()
+            ->with(['comments.author', 'author.avatar'])
+            ->withCount(['comments', 'likes'])
+            ->findOrFail($id);
 
         return response()->json(compact('comment'));
     }
@@ -66,11 +74,12 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, $post_id, $id)
     {
-        $comment = Comment::findOrFail($id);
         $data = $request->validated();
+        $comment = Comment::findOrFail($id);
+
         Gate::authorize('update', $comment);
 
-        $comment->fill($data)->save();
+        $comment->update($data);
 
         return response()->json(compact('comment'));
     }
@@ -85,7 +94,37 @@ class CommentController extends Controller
     {
         $comment = Comment::findOrFail($id);
         Gate::authorize('delete', $comment);
+        
         $comment->delete();
+
         return response()->json(['message' => 'Successful']);
+    }
+
+    /**
+     * Add a like for comment.
+     *
+     * @param Request $request
+     * 
+     * @return ResponseJson
+     */
+    public function commentLike(Request $request)
+    {
+        $comment_id = $request['comment_id'];
+        $comment = Comment::findOrFail($comment_id);
+        $user = Auth::user();
+
+        $like = $user->likes()->where('liketable_id', $comment_id)->first();
+
+        if($like) {
+           $like->delete();
+           return response()->json(['message' => 'Delete successful']);
+        }
+
+        $like = new Like;
+        $like->author_id = $user->id;
+
+        $comment->likes()->save($like);
+
+        return response()->json(compact('like'));
     }
 }

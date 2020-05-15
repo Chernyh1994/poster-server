@@ -12,6 +12,7 @@ Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
         Route::post('post/like', 'PostController@postLike');
 
         Route::apiResource('post.comment', 'CommentController');
+        Route::post('comment/like', 'CommentController@commentLike');
         
         Route::get('user', 'UserController@myProfile');
         Route::put('user', 'UserController@update');
