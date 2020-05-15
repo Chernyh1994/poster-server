@@ -182,12 +182,15 @@ class PostController extends Controller
         $user = Auth::user();
 
         $like = $user->likes()->where('liketable_id', $post_id)->first();
+
         if($like) {
            $like->delete();
            return response()->json(['message' => 'Delete successful']);
         }
+
         $like = new Like;
         $like->author_id = $user->id;
+
         $post->likes()->save($like);
 
         return response()->json(compact('like'));

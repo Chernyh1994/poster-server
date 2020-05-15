@@ -5,8 +5,9 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\V1\User\UpdateUserRequest;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -18,6 +19,7 @@ class UserController extends Controller
     public function myProfile()
     {
         $user = User::with('avatar')->findOrFail(Auth::id());
+
         return response()->json(compact('user'));
     }
 
@@ -31,11 +33,12 @@ class UserController extends Controller
     public function userProfile($id)
     {
         $user = User::with('avatar')->findOrFail($id);
+
         return response()->json(compact('user'));
     }
 
     /**
-     * Update user.
+     * Update user profile.
      *
      * @param UpdateUserRequest $request
      * 
@@ -45,27 +48,40 @@ class UserController extends Controller
     {    
         $data = $request->validated(); 
         $user = Auth::user();
+        $avatar = $request->file('avatar');
 
-        if($request->file('avatar')) {
+        DB::beginTransaction();
 
-            if($user->avatar) {
-                Storage::disk('public')->delete('upload/avatars/'.$user->avatar->name);
-            }
+        try {
+            $user->update($data);
+
+            if($avatar) {
+
+                if($user->avatar) {
+                    Storage::disk('public')->delete('upload/avatars/'.$user->avatar->name);
+                }
+                
+                $avatar->store('upload/avatars', 'public');
+
+                $name = $avatar->hashName();
+                $path = asset('storage/upload/avatars/'.$name);
+    
+                $user->avatar()->updateOrCreate([],[
+                    'path' => $path,
+                    'name' => $name,
+                    'mime' => $avatar->getMimeType(),
+                    'size' => $avatar->getSize(),
+                ]);
+            };
+                
+            DB::commit();
+            $user->refresh();
             
-            $request->file('avatar')->store('upload/avatars', 'public');
-            $name = $request->file('avatar')->hashName();
-            $path = asset('storage/upload/avatars/'.$name);
+            return response()->json(compact('user'));
+        } catch (\Throwable $e) {
+            DB::rollback();
 
-            $user->avatar()->updateOrCreate([],[
-                'path' => $path,
-                'name' => $name,
-                'mime' => $request->file('avatar')->getMimeType(),
-                'size' => $request->file('avatar')->getSize(),
-            ]);
-        };
-
-        $user->update($data)->fresh();
-
-        return response()->json(compact('user'));
+            return response()->json(['message' => 'Something went wrong try again.'], 422);
+        }
     }
 }
