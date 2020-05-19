@@ -49,14 +49,6 @@ class Post extends Model
     }
 
     /**
-     * Get the video record associated with the post.
-     */
-    public function video()
-    {
-        return $this->hasOne(Video::class);
-    }
-
-    /**
      * Get all of the like's posts.
      */
     public function likes()

@@ -253,11 +253,6 @@
 									"type": "text"
 								},
 								{
-									"key": "video_url",
-									"value": "https://www.youtube.com/watch?v=cU9QCPuFXEQ",
-									"type": "text"
-								},
-								{
 									"key": "media[0]",
 									"type": "file",
 									"src": "/home/nikolay/Documents/Business/Escape room Rubicon/Foto/IMG_20161106_162852.jpg"
@@ -428,11 +423,6 @@
 								{
 									"key": "content",
 									"value": "update test",
-									"type": "text"
-								},
-								{
-									"key": "video_url",
-									"value": "https://www.youtube.com/watch?v=cU9QCPuFWWW",
 									"type": "text"
 								},
 								{
@@ -728,7 +718,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "WqD1HnNgmCUISWtMntdqvdb4cjgOfG2YaFbBnZcFocX2oezepYbqKHsmTxqkcGmtzxbIjoN5nKTCDrQV",
 									"type": "string"
 								}
 							]
@@ -742,7 +732,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/V1/post/37/comment/30",
+							"raw": "http://localhost:8000/api/V1/post/51/comment/12",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -752,9 +742,9 @@
 								"api",
 								"V1",
 								"post",
-								"37",
+								"51",
 								"comment",
-								"30"
+								"12"
 							]
 						}
 					},

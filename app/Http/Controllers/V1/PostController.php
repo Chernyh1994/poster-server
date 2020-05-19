@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author.avatar', 'images', 'video'])
+        $posts = Post::with(['author.avatar', 'images'])
             ->withCount(['comments', 'likes'])
             ->latest()
             ->paginate(10);
@@ -41,7 +41,6 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $arr_images = $request->file('media');
-        $video_url = isset($data['video_url']);
         
         DB::beginTransaction();
 
@@ -63,10 +62,6 @@ class PostController extends Controller
                     ]);
                 };
             }
-
-            if($video_url) {
-                $post->video()->create(['url' => $data['video_url']]);
-            }
             
             DB::commit();
             $post->refresh();
@@ -87,7 +82,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author.avatar', 'images', 'video'])->findOrFail($id);
+        $post = Post::with(['author.avatar', 'images'])->findOrFail($id);
 
         return response()->json(compact('post'));
     }
@@ -104,7 +99,6 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $arr_images = $request->file('media');
-        $video_url = isset($data['video_url']);
         $post = Post::findOrFail($id);
 
         Gate::authorize('update', $post);
@@ -128,10 +122,6 @@ class PostController extends Controller
                         'size' => $image->getSize(),
                     ]);
                 };
-            }
-
-            if($video_url) {
-                $post->video()->updateOrCreate([], ['url' => $data['video_url']]);
             }
             
             DB::commit();
@@ -169,7 +159,7 @@ class PostController extends Controller
     public function showMyPosts()
     {
         $posts = Auth::user()->posts()
-            ->with(['author.avatar', 'images', 'video'])
+            ->with(['author.avatar', 'images'])
             ->withCount(['comments', 'likes'])
             ->latest()
             ->paginate(10);
