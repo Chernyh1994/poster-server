@@ -9,10 +9,12 @@ Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
     Route::middleware('auth:sanctum')->group(function() {
         Route::apiResource('post', 'PostController');
         Route::get('user/posts', 'PostController@showMyPosts');
-        Route::post('post/like', 'PostController@postLike');
+        Route::get('post/{post}/like', 'PostController@postLike');
+        Route::get('post/{post}/unlike', 'PostController@postUnlike');
 
         Route::apiResource('post.comment', 'CommentController');
-        Route::post('comment/like', 'CommentController@commentLike');
+        Route::get('comment/{comment}/like', 'CommentController@commentLike');
+        Route::get('comment/{comment}/unlike', 'CommentController@commentUnlike');
         
         Route::get('user', 'UserController@myProfile');
         Route::put('user', 'UserController@update');

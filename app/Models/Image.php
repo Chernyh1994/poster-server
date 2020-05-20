@@ -15,21 +15,18 @@ class Image extends Model
         'path', 'name', 'mime', 'size'
     ];
 
-
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'updated_at', 'imagetable_id', 'imagetable_type'
-    ];
+    protected $hidden = [];
 
     /**
      *  Get the owning imagetable model.
      */
-    public function imagetable()
+    public function post()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Post::class);
     }
 }

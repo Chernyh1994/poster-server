@@ -38,11 +38,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the avatar record associated with the user.
+     * Get the profile with the user.
      */
-    public function avatar()
+    public function profile()
     {
-        return $this->morphOne(Image::class, 'imagetable');
+        return $this->hasOne(Profile::class);
     }
 
     /**

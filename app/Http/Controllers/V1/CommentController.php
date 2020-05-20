@@ -12,7 +12,6 @@ use App\Models\Like;
 use App\Http\Requests\V1\Comment\CreateCommentRequest;
 use App\Http\Requests\V1\Comment\UpdateCommentRequest;
 
-
 class CommentController extends Controller
 {
     /**
@@ -23,7 +22,8 @@ class CommentController extends Controller
     public function index($id)
     {
         $comments = Post::findOrFail($id)->comments()
-            ->with(['comments.author.avatar', 'author.avatar'])
+            ->with(['subcomments.author.profile', 'author.profile'])
+            ->withCount(['subcomments', 'likes'])
             ->latest()
             ->paginate(10);
 
@@ -40,11 +40,9 @@ class CommentController extends Controller
     public function store(CreateCommentRequest $request, $id)
     {
         $data = $request->validated();
-        if(isset($data['parent_id'])) {
-            $comment = Comment::findOrFail($data['parent_id'])->comments()->create($data);
-        } else {
-            $comment = Post::findOrFail($id)->comments()->create($data);
-        }
+        $comment = Post::findOrFail($id)->comments()->create($data);
+
+        $comment->refresh()->load('author.profile');
 
         return response()->json(compact('comment'));
     }
@@ -55,14 +53,14 @@ class CommentController extends Controller
      * @param  int $post_id, $id
      * @return ResponseJson
      */
-    public function show($post_id, $id)
+    public function show($post_id, $created_at)
     {
         $comments = Post::findOrFail($post_id)->comments()
-            ->with(['comments.author.avatar', 'author.avatar'])
-            ->withCount(['comments', 'likes'])
-            ->where('id', '>', $id)
-            ->take(10)
-            // ->latest()
+            ->with(['subcomments.author.profile', 'author.profile'])
+            ->withCount(['subcomments', 'likes'])
+            ->where('created_at', '<', $created_at)
+            ->latest()
+            ->limit(5)
             ->get();
 
         return response()->json(compact('comments'));
@@ -78,11 +76,12 @@ class CommentController extends Controller
     public function update(UpdateCommentRequest $request, $post_id, $id)
     {
         $data = $request->validated();
-        $comment = Comment::findOrFail($id);
+        $comment = Post::findOrFail($post_id)->comments()->findOrFail($id);
 
         Gate::authorize('update', $comment);
 
         $comment->update($data);
+        $comment->refresh()->load(['author.profile', 'subcomments']);
 
         return response()->json(compact('comment'));
     }
@@ -95,7 +94,8 @@ class CommentController extends Controller
      */
     public function destroy($post_id, $id)
     {
-        $comment = Comment::findOrFail($id);
+        $comment = Post::findOrFail($post_id)->comments()->findOrFail($id);
+
         Gate::authorize('delete', $comment);
         
         $comment->delete();
@@ -106,28 +106,41 @@ class CommentController extends Controller
     /**
      * Add a like for comment.
      *
-     * @param Request $request
-     * 
+     * @param  int $id
      * @return ResponseJson
      */
-    public function commentLike(Request $request)
+    public function commentLike($id)
     {
-        $comment_id = $request['comment_id'];
-        $comment = Comment::findOrFail($comment_id);
+        $comment = Comment::findOrFail($id);
         $user = Auth::user();
-
-        $like = $user->likes()->where('liketable_id', $comment_id)->first();
+        $like = $comment->likes()->where('author_id', $user->id)->first();
 
         if($like) {
-           $like->delete();
-           return response()->json(['message' => 'Delete successful']);
+           return response()->json(['message' => 'Comment already has like by you']);
         }
-
+        
         $like = new Like;
         $like->author_id = $user->id;
 
         $comment->likes()->save($like);
 
         return response()->json(compact('like'));
+    }
+
+    /**
+     * Add unlike for comment.
+     *
+     * @param  int $id
+     * @return ResponseJson
+     */
+    public function commentUnlike($id)
+    {
+        $like = Comment::findOrFail($id)->likes()->where('liketable_id', $id)->first();
+
+        Gate::authorize('unlike', $like);
+
+        $like->delete();
+
+        return response()->json(['message' => 'Unlike successful']);
     }
 }

@@ -21,8 +21,9 @@ class Comment extends Model
      * @var array
      */
     protected $hidden = [
-        'updated_at', 'commentable_id', 'commentable_type'
+        'updated_at'
     ];
+
     /**
      * Get the user that owns the comment.
      */
@@ -32,19 +33,27 @@ class Comment extends Model
     }
 
     /**
-     * Get the owning commentable model.
+     * Get the post that owns the comment.
      */
-    public function commentable()
+    public function post()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Post::class);
     }
 
     /**
-     * Get all of the post's comments.
+     * Get the subcomment that owns the comment.
      */
-    public function comments()
+    public function comment()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->belongsTo(Comment::class);
+    }
+
+    /**
+     * Get all of the comment's subcomments.
+     */
+    public function subcomments()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 
     /**

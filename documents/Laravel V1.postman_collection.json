@@ -131,7 +131,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -163,7 +163,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "IP6W5QlzhPZRGeMSgYeiIcSxlgCz6tnV2PxSqtF0AFFtghJlCkJLQJdUO3GgSIiLiYdzi1Wntn2sj6TU",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -181,7 +181,7 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "name1",
+									"value": "name4",
 									"type": "text"
 								},
 								{
@@ -231,7 +231,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -253,29 +253,29 @@
 									"type": "text"
 								},
 								{
-									"key": "media[0]",
+									"key": "images[0]",
 									"type": "file",
 									"src": "/home/nikolay/Documents/Business/Escape room Rubicon/Foto/IMG_20161106_162852.jpg"
 								},
 								{
-									"key": "media[1]",
+									"key": "images[1]",
 									"type": "file",
 									"src": "/home/nikolay/Documents/Business/Escape room Rubicon/Foto/IMG_20161106_162904.jpg"
 								},
 								{
-									"key": "media[2]",
+									"key": "images[2]",
 									"type": "file",
 									"src": [],
 									"disabled": true
 								},
 								{
-									"key": "media[3]",
+									"key": "images[3]",
 									"type": "file",
 									"src": [],
 									"disabled": true
 								},
 								{
-									"key": "media[4]",
+									"key": "images[4]",
 									"type": "file",
 									"src": [],
 									"disabled": true
@@ -311,7 +311,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -325,7 +325,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/V1/post?page=1",
+							"raw": "http://localhost:8000/api/V1/post",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -335,12 +335,6 @@
 								"api",
 								"V1",
 								"post"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								}
 							]
 						}
 					},
@@ -357,7 +351,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -380,7 +374,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/V1/post/51",
+							"raw": "http://localhost:8000/api/V1/post/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -390,7 +384,7 @@
 								"api",
 								"V1",
 								"post",
-								"51"
+								"1"
 							]
 						}
 					},
@@ -404,7 +398,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -426,29 +420,29 @@
 									"type": "text"
 								},
 								{
-									"key": "media[0]",
+									"key": "images[0]",
 									"type": "file",
 									"src": "/home/nikolay/Documents/Business/Escape room Rubicon/Foto/IMG_20161106_162942.jpg"
 								},
 								{
-									"key": "media[1]",
+									"key": "images[1]",
 									"type": "file",
 									"src": "/home/nikolay/Documents/Business/Escape room Rubicon/Foto/IMG_20161106_163350.jpg"
 								},
 								{
-									"key": "media[2]",
+									"key": "images[2]",
 									"type": "file",
 									"src": [],
 									"disabled": true
 								},
 								{
-									"key": "media[3]",
+									"key": "images[3]",
 									"type": "file",
 									"src": [],
 									"disabled": true
 								},
 								{
-									"key": "media[4]",
+									"key": "images[4]",
 									"type": "file",
 									"src": [],
 									"disabled": true
@@ -560,107 +554,6 @@
 				},
 				{
 					"name": "post like",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"post_id\":\"51\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/V1/post/like",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"V1",
-								"post",
-								"like"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Comment",
-			"item": [
-				{
-					"name": "comment",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"content\":\"images\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/V1/post/37/comment ",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"V1",
-								"post",
-								"37",
-								"comment "
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "comment",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -670,7 +563,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -693,7 +586,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/V1/post/37/comment ",
+							"raw": "http://localhost:8000/api/V1/post/2/like",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -703,7 +596,151 @@
 								"api",
 								"V1",
 								"post",
-								"37",
+								"2",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post unlike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/V1/post/2/unlike",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"V1",
+								"post",
+								"2",
+								"unlike"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"content\":\"images\",\n\t\"parent_id\":\"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/V1/post/1/comment ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"V1",
+								"post",
+								"1",
+								"comment "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/V1/post/1/comment ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"V1",
+								"post",
+								"1",
 								"comment "
 							]
 						}
@@ -718,7 +755,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "WqD1HnNgmCUISWtMntdqvdb4cjgOfG2YaFbBnZcFocX2oezepYbqKHsmTxqkcGmtzxbIjoN5nKTCDrQV",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -732,7 +769,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/V1/post/51/comment/12",
+							"raw": "http://localhost:8000/api/V1/post/1/comment/2020-05-20T10:00:49.000000Z",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -742,9 +779,9 @@
 								"api",
 								"V1",
 								"post",
-								"51",
+								"1",
 								"comment",
-								"12"
+								"2020-05-20T10:00:49.000000Z"
 							]
 						}
 					},
@@ -758,7 +795,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -781,7 +818,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/V1/post/3/comment/1",
+							"raw": "http://localhost:8000/api/V1/post/1/comment/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -791,7 +828,7 @@
 								"api",
 								"V1",
 								"post",
-								"3",
+								"1",
 								"comment",
 								"1"
 							]
@@ -807,7 +844,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
@@ -821,7 +858,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/V1/post/3/comment/1",
+							"raw": "http://localhost:8000/api/V1/post/1/comment/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -831,9 +868,9 @@
 								"api",
 								"V1",
 								"post",
-								"3",
+								"1",
 								"comment",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -841,18 +878,21 @@
 				},
 				{
 					"name": "comment like",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "hNl9EGDZ2VVPLIh5ImoSNgwFPWLHTb4UeAvAP7PFCTc3dYL43fyDU4RPdjwEAatVmtrdB4veiCdawYmr",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
 									"type": "string"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Accept",
@@ -862,7 +902,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"comment_id\":\"2\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -870,7 +910,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/V1/comment/like",
+							"raw": "http://localhost:8000/api/V1/comment/3/like",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -880,7 +920,47 @@
 								"api",
 								"V1",
 								"comment",
+								"3",
 								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comment unlike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eT9T87tAkWkWNHrc2ur7UnzRBeyyk4ZfL0AZNgCN3FEKiysaB9bGJOv0CXkmpN1WonMqvd3bHhoE1Hti",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/V1/comment/1/unlike",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"V1",
+								"comment",
+								"1",
+								"unlike"
 							]
 						}
 					},

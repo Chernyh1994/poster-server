@@ -22,10 +22,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author.avatar', 'images'])
+        $posts = Post::with(['author.profile', 'images'])
             ->withCount(['comments', 'likes'])
             ->latest()
             ->paginate(10);
+            // ->offset(10)
+            // ->limit(5)
+            // ->get();
 
         return response()->json(compact('posts'));
     }
@@ -39,16 +42,13 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-        $data = $request->validated();
-        $arr_images = $request->file('media');
-        
-        DB::beginTransaction();
-
-        try {
+        $createTransaction = DB::transaction(function () use ($request) {
+            $data = $request->validated();
+            $images = $request->file('images');
             $post = Auth::user()->posts()->create($data);
 
-            if($arr_images) {
-                foreach($arr_images as $image) {
+            if($images) {
+                foreach($images as $image) {
                     $image->store('upload/postImages', 'public');
 
                     $name = $image->hashName();
@@ -62,16 +62,12 @@ class PostController extends Controller
                     ]);
                 };
             }
+            $post->refresh()->load(['author.profile', 'images']);
             
-            DB::commit();
-            $post->refresh();
-
             return response()->json(compact('post'));
-        } catch (\Throwable $e) {
-            DB::rollback();
+        });
 
-            return response()->json(['message' => 'Something went wrong try again.'], 422);
-        }
+        return $createTransaction;
     }
 
     /**
@@ -82,7 +78,11 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['author.avatar', 'images'])->findOrFail($id);
+        $post = Post::with(['author.profile', 'images'])
+        ->with(['comments' => function ($query) {
+            $query->latest()->limit(5);
+        }])
+        ->findOrFail($id);
 
         return response()->json(compact('post'));
     }
@@ -97,25 +97,21 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, $id)
     {
-        $data = $request->validated();
-        $arr_images = $request->file('media');
-        $post = Post::findOrFail($id);
+        $updateTransaction = DB::transaction(function () use ($request, $id) {
+            $data = $request->validated();
+            $images = $request->file('images');
+            $post = Post::findOrFail($id);
+    
+            Gate::authorize('update', $post);
 
-        Gate::authorize('update', $post);
-
-        DB::beginTransaction();
-
-        try {
-            $post->update($data);
-
-            if($arr_images) {
-                foreach($arr_images as $image) {
+            if($images) {
+                foreach($images as $image) {
                     $image->store('upload/postImages', 'public');
 
                     $name = $image->hashName();
                     $path = asset('storage/upload/postImages/'.$name);
 
-                    $post->images()->updateOrCreate([], [
+                    $post->images()->create([
                         'path' => $path,
                         'name' => $name,
                         'mime' => $image->getMimeType(),
@@ -123,16 +119,12 @@ class PostController extends Controller
                     ]);
                 };
             }
+            $post->refresh()->load(['author.profile', 'images']);
             
-            DB::commit();
-            $post->refresh();
-
             return response()->json(compact('post'));
-        } catch (\Throwable $e) {
-            DB::rollback();
+        });
 
-            return response()->json(['message' => 'Something went wrong try again.'], 422);
-        }
+        return $updateTransaction;
     }
 
     /**
@@ -159,7 +151,7 @@ class PostController extends Controller
     public function showMyPosts()
     {
         $posts = Auth::user()->posts()
-            ->with(['author.avatar', 'images'])
+            ->with(['author.profile', 'images'])
             ->withCount(['comments', 'likes'])
             ->latest()
             ->paginate(10);
@@ -170,28 +162,41 @@ class PostController extends Controller
     /**
      * Add a like for post.
      *
-     * @param Request $request
-     * 
+     * @param  int $id
      * @return ResponseJson
      */
-    public function postLike(Request $request)
+    public function postLike($id)
     {
-        $post_id = $request['post_id'];
-        $post = Post::findOrFail($post_id);
+        $post = Post::findOrFail($id);
         $user = Auth::user();
-
-        $like = $user->likes()->where('liketable_id', $post_id)->first();
+        $like = $post->likes()->where('author_id', $user->id)->first();
 
         if($like) {
-           $like->delete();
-           return response()->json(['message' => 'Delete successful']);
+           return response()->json(['message' => 'Post already has like by you']);
         }
-
+        
         $like = new Like;
         $like->author_id = $user->id;
 
         $post->likes()->save($like);
 
         return response()->json(compact('like'));
+    }
+
+    /**
+     * Add unlike for post.
+     *
+     * @param  int $id
+     * @return ResponseJson
+     */
+    public function postUnlike($id)
+    {
+        $like = Post::findOrFail($id)->likes()->where('liketable_id', $id)->first();
+
+        Gate::authorize('unlike', $like);
+
+        $like->delete();
+
+        return response()->json(['message' => 'Unlike successful']);
     }
 }

@@ -37,7 +37,7 @@ class Post extends Model
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->hasMany(Comment::class);
     }
     
     /**
@@ -45,7 +45,7 @@ class Post extends Model
      */
     public function images()
     {
-        return $this->morphMany(Image::class, 'imagetable');
+        return $this->hasMany(Image::class);
     }
 
     /**

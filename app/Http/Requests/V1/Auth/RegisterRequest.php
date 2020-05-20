@@ -38,7 +38,7 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.unique' => 'Email already exists!',
+            'email.unique' => 'A user with this email is already registered in the system',
         ];
     }
 }

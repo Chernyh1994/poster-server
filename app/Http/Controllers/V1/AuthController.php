@@ -26,6 +26,7 @@ class AuthController extends Controller
             $credentials['password'] = bcrypt($credentials['password']);
             $user = User::create($credentials);
             $token = $user->createToken($request->userAgent())->plainTextToken;
+
             return response()->json(compact('user', 'token'));
         }
         return response()->json(['message' => 'Email is not available.'], 422);
@@ -43,8 +44,9 @@ class AuthController extends Controller
         $credentials = $request->validated();
         if (Auth::once($credentials))
         {
-            $user = User::with('avatar')->findOrFail(Auth::id());
+            $user = Auth::user()->load('profile');
             $token = $user->createToken($request->userAgent())->plainTextToken;
+
             return response()->json(compact('user', 'token'));
         }
         return response()->json(['message' => 'Incorrect username or password.'], 422);

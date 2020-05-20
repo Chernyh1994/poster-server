@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function myProfile()
     {
-        $user = User::with('avatar')->findOrFail(Auth::id());
+        $user = Auth::user()->load('profile');
 
         return response()->json(compact('user'));
     }
@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function userProfile($id)
     {
-        $user = User::with('avatar')->findOrFail($id);
+        $user = User::with('profile')->findOrFail($id);
 
         return response()->json(compact('user'));
     }
@@ -46,19 +46,16 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request)
     {    
-        $data = $request->validated(); 
-        $user = Auth::user();
-        $avatar = $request->file('avatar');
+        $updateTransaction = DB::transaction(function () use ($request) {
+            $data = $request->validated(); 
+            $user = Auth::user();
+            $avatar = $request->file('avatar');
 
-        DB::beginTransaction();
-
-        try {
             $user->update($data);
-
+        
             if($avatar) {
-
-                if($user->avatar) {
-                    Storage::disk('public')->delete('upload/avatars/'.$user->avatar->name);
+                if($user->profile['avatar_name']) {
+                    Storage::disk('public')->delete('upload/avatars/'.$user->profile->avatar_name);
                 }
                 
                 $avatar->store('upload/avatars', 'public');
@@ -66,22 +63,15 @@ class UserController extends Controller
                 $name = $avatar->hashName();
                 $path = asset('storage/upload/avatars/'.$name);
     
-                $user->avatar()->updateOrCreate([],[
-                    'path' => $path,
-                    'name' => $name,
-                    'mime' => $avatar->getMimeType(),
-                    'size' => $avatar->getSize(),
+                $user->profile()->updateOrCreate([],[
+                    'avatar_path' => $path,
+                    'avatar_name' => $name,
                 ]);
             };
-                
-            DB::commit();
             $user->refresh();
-            
             return response()->json(compact('user'));
-        } catch (\Throwable $e) {
-            DB::rollback();
+        });
 
-            return response()->json(['message' => 'Something went wrong try again.'], 422);
-        }
+        return $updateTransaction;
     }
 }

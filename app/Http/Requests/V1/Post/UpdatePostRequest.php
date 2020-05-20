@@ -25,8 +25,8 @@ class UpdatePostRequest extends FormRequest
     {
         return [
             'content' => 'required|string|min:1|max:2000|',
-            'media' => 'array|max:5',
-            'media.*' => 'nullable|mimes:jpeg,jpg,png,gif|file|max:1512',
+            'images' => 'array|max:5',
+            'images.*' => 'nullable|mimes:jpeg,jpg,png,gif|file|max:1512',
         ];
     }
 }

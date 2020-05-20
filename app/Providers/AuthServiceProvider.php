@@ -6,8 +6,10 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Policies\PostPolicy;
 use App\Policies\CommentPolicy;
+use App\Policies\LikePolicy;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Like;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model' => 'App\Policies\ModelPolicy',
         Post::class => PostPolicy::class,
         Comment::class => CommentPolicy::class,
+        Like::class => LikePolicy::class,
     ];
 
     /**
