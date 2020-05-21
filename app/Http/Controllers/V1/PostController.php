@@ -62,7 +62,7 @@ class PostController extends Controller
                     ]);
                 };
             }
-            $post->refresh()->load(['author.profile', 'images']);
+            $post->refresh()->loadCount(['comments', 'likes'])->load(['author.profile', 'images']);
             
             return response()->json(compact('post'));
         });
@@ -76,15 +76,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return ResponseJson
      */
-    public function show($id)
+    public function show($created_at)
     {
-        $post = Post::with(['author.profile', 'images'])
+        $posts = Post::with(['author.profile', 'images'])
+        ->withCount(['comments', 'likes'])
+        ->where('created_at', '<', $created_at)
         ->with(['comments' => function ($query) {
             $query->latest()->limit(5);
         }])
-        ->findOrFail($id);
+        ->latest()
+        ->limit(10)
+        ->get();
 
-        return response()->json(compact('post'));
+        return response()->json(compact('posts'));
     }
 
     /**
