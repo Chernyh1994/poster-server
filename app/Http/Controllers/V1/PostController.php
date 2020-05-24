@@ -70,7 +70,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $created_at
      * @return ResponseJson
      */
     public function show($created_at)
@@ -153,15 +153,18 @@ class PostController extends Controller
     /**
      * Display a lists post for user.
      *
+     * @param  int  $created_at
      * @return ResponseJson
      */
-    public function showMyPosts()
+    public function showMyPosts($created_at)
     {
         $posts = Auth::user()->posts()
-            ->with(['author.profile', 'images'])
-            ->withCount(['comments', 'likes'])
-            ->latest()
-            ->paginate(10);
+        ->with(['author.profile', 'images'])
+        ->withCount(['comments', 'likes'])
+        ->where('created_at', '<', $created_at)
+        ->latest()
+        ->limit(10)
+        ->get();
 
         $has_more = (boolean)count($posts);
         
