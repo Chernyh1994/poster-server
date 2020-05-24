@@ -63,7 +63,9 @@ class CommentController extends Controller
             ->limit(5)
             ->get();
 
-        return response()->json(compact('comments'));
+        $has_more = (boolean)count($comments);
+
+        return response()->json(compact('comments', 'has_more'));
     }
 
     /**

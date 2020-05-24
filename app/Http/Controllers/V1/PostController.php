@@ -26,9 +26,6 @@ class PostController extends Controller
             ->withCount(['comments', 'likes'])
             ->latest()
             ->paginate(10);
-            // ->offset(10)
-            // ->limit(5)
-            // ->get();
 
         return response()->json(compact('posts'));
     }
@@ -82,13 +79,19 @@ class PostController extends Controller
         ->withCount(['comments', 'likes'])
         ->where('created_at', '<', $created_at)
         ->with(['comments' => function ($query) {
-            $query->latest()->limit(5);
+            $query
+                ->with(['author.profile'])
+                ->withCount(['subcomments', 'likes'])
+                ->latest()
+                ->limit(5);
         }])
         ->latest()
         ->limit(10)
         ->get();
 
-        return response()->json(compact('posts'));
+        $has_more = (boolean)count($posts);
+
+        return response()->json(compact('posts', 'has_more'));
     }
 
     /**
@@ -159,8 +162,10 @@ class PostController extends Controller
             ->withCount(['comments', 'likes'])
             ->latest()
             ->paginate(10);
+
+        $has_more = (boolean)count($posts);
         
-        return response()->json(compact('posts'));
+        return response()->json(compact('posts', 'has_more'));
     }
 
     /**
