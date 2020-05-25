@@ -201,7 +201,8 @@ class PostController extends Controller
      */
     public function postUnlike($id)
     {
-        $like = Post::findOrFail($id)->likes()->where('liketable_id', $id)->first();
+        $user = Auth::user();
+        $like = Post::findOrFail($id)->likes()->where('author_id', $user->id)->first();
 
         Gate::authorize('unlike', $like);
 

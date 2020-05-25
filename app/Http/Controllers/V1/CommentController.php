@@ -137,7 +137,8 @@ class CommentController extends Controller
      */
     public function commentUnlike($id)
     {
-        $like = Comment::findOrFail($id)->likes()->where('liketable_id', $id)->first();
+        $user = Auth::user();
+        $like = Comment::findOrFail($id)->likes()->where('author_id', $user->id)->first();
 
         Gate::authorize('unlike', $like);
 
