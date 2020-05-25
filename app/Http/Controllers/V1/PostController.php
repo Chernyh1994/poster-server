@@ -68,7 +68,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a listing post.
      *
      * @param  int  $created_at
      * @return ResponseJson
@@ -78,12 +78,10 @@ class PostController extends Controller
         $posts = Post::with(['author.profile', 'images'])
         ->withCount(['comments', 'likes'])
         ->where('created_at', '<', $created_at)
-        ->with(['comments' => function ($query) {
-            $query
-                ->with(['author.profile'])
-                ->withCount(['subcomments', 'likes'])
-                ->latest()
-                ->limit(5);
+        ->with(['likes' => function ($query) {
+            if ($query->where('author_id', Auth::id())) {
+                return true;
+            } 
         }])
         ->latest()
         ->limit(10)
