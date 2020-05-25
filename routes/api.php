@@ -9,6 +9,7 @@ Route::middleware('api')->prefix('V1')->namespace('V1')->group(function() {
     Route::middleware('auth:sanctum')->group(function() {
         Route::apiResource('post', 'PostController');
         Route::get('currentuser/posts/{createdAt}', 'PostController@showMyPosts');
+        Route::get('favorite/posts/{createdAt}', 'PostController@showFavoritePosts');
         Route::get('post/{post}/like', 'PostController@postLike');
         Route::get('post/{post}/unlike', 'PostController@postUnlike');
 

@@ -59,7 +59,9 @@ class PostController extends Controller
                     ]);
                 };
             }
-            $post->refresh()->loadCount(['comments', 'likes'])->load(['author.profile', 'images']);
+            $post->refresh()
+                ->loadCount(['comments', 'likes'])
+                ->load(['author.profile', 'images', 'likes']);
             
             return response()->json(compact('post'));
         });
@@ -157,16 +159,32 @@ class PostController extends Controller
     public function showMyPosts($created_at)
     {
         $posts = Auth::user()->posts()
-        ->with(['author.profile', 'images'])
-        ->withCount(['comments', 'likes'])
-        ->where('created_at', '<', $created_at)
-        ->latest()
-        ->limit(10)
-        ->get();
+            ->with(['author.profile', 'images'])
+            ->with(['likes' => function ($query) {
+                if ($query->where('author_id', Auth::id())) {
+                    return true;
+                } 
+            }])
+            ->withCount(['comments', 'likes'])
+            ->where('created_at', '<', $created_at)
+            ->latest()
+            ->limit(10)
+            ->get();
 
         $has_more = (boolean)count($posts);
         
         return response()->json(compact('posts', 'has_more'));
+    }
+
+    /**
+     * Display a lists favorite post for user.
+     *
+     * @param  int  $created_at
+     * @return ResponseJson
+     */
+    public function showFavoritePosts($created_at)
+    {
+       //TODO:
     }
 
     /**
