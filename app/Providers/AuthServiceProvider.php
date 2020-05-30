@@ -4,6 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Policies\PostPolicy;
+use App\Policies\CommentPolicy;
+use App\Policies\LikePolicy;
+use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Like;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +19,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Model' => 'App\Policies\ModelPolicy',
+        Post::class => PostPolicy::class,
+        Comment::class => CommentPolicy::class,
+        Like::class => LikePolicy::class,
     ];
 
     /**
@@ -23,8 +32,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
-
-        //
+        $this->registerPolicies();        
     }
 }
